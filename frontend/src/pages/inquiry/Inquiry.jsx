@@ -4,7 +4,7 @@ import {
     updateInquiry,
     deleteInquiry
 } from "../../utils/inquiryStorage";
-import "./inquiry.css";
+import "./Inquiry.css";
 
 export default function Inquiry() {
     const [list, setList] = useState(() => getInquiries());
