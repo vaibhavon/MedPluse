@@ -1,0 +1,98 @@
+/* MachineCard.css */
+
+.machine-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 5px solid #e2e8f0; /* Neutral default border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 350px;
+}
+
+.machine-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.machine-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: #1a202c;
+}
+
+.machine-card p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+  color: #4a5568;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Status Pill Styling */
+.status {
+  padding: 0.2rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status.working {
+  background-color: #def7ec;
+  color: #03543f;
+}
+
+.status.due {
+  background-color: #fde8e8;
+  color: #9b1c1c;
+}
+
+/* Dynamic Border based on Status */
+.machine-card:has(.status.working) {
+  border-left-color: #31c48d;
+}
+
+.machine-card:has(.status.due) {
+  border-left-color: #f05252;
+}
+
+/* Action Buttons Container */
+.card-action {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+  border-top: 1px solid #edf2f7;
+  padding-top: 1rem;
+}
+
+.card-action button {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.card-action button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e0;
+}
+
+/* Specific Delete Style */
+.card-action .delete-btn {
+  color: #e53e3e;
+  border-color: #feb2b2;
+}
+
+.card-action .delete-btn:hover {
+  background: #fff5f5;
+  border-color: #f56565;
+}

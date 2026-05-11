@@ -1,0 +1,111 @@
+/* src/labReview/labReview.css */
+
+.lab-page {
+  padding: 24px;
+  background: #f6f8fb;
+  min-height: 100vh;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* Tabs */
+.tabs {
+  margin: 16px 0;
+  display: flex;
+  gap: 8px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* Row */
+.lab-row {
+  background: white;
+  padding: 14px;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 120px;
+  align-items: center;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+}
+
+.sub {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Status */
+.status.pending {
+  background: #fef3c7;
+  color: #d97706;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.status.reviewed {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* Buttons */
+.btn.review {
+  background: #2563eb;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  width: 420px;
+}
+
+.modal textarea {
+  width: 100%;
+  height: 90px;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn.save {
+  background: #16a34a;
+  color: white;
+}
+
+.btn.cancel {
+  background: #e5e7eb;
+}

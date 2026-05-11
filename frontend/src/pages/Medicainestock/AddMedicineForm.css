@@ -1,0 +1,83 @@
+/* Container for the whole form */
+.add-medicine-form {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft shadow */
+  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+}
+
+.add-medicine-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+/* The Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 15px; /* Space between inputs */
+  margin-bottom: 20px;
+}
+
+/* Input Styling */
+.add-medicine-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box; /* Ensures padding doesn't break layout */
+}
+
+/* Input Focus State */
+.add-medicine-form input:focus {
+  outline: none;
+  border-color: #007bff; /* Highlight blue when typing */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Label for Date input */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-group label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Add Button */
+.add-btn {
+  padding: 12px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:active {
+     background: #1e85d0;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(42, 157, 244, 0.3);
+
+}
+
+/* Responsive: Stack inputs on mobile */
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr; /* Single column */
+  }
+}

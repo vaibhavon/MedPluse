@@ -1,0 +1,69 @@
+.visit-history-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.visit-history-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+.visit-history-table-container {
+  overflow-x: auto;
+}
+
+.visit-history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.visit-history-table thead tr {
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.visit-history-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.visit-history-table tbody tr {
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.visit-history-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #111827;
+}
+
+.visit-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.visit-status-completed {
+  background-color: #DCFCE7;
+  color: #16A34A;
+}
+
+.visit-status-scheduled {
+  background-color: #DBEAFE;
+  color: #2563EB;
+}
+
+.visit-status-cancelled {
+  background-color: #FEE2E2;
+  color: #DC2626;
+}

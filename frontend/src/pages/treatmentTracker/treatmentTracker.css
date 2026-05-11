@@ -1,0 +1,57 @@
+/* src/treatmentTracker/treatmentTracker.css */
+
+.treat-page {
+  background: #f6f8fb;
+  padding: 24px;
+  border-radius: 16px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.treat-header h2 {
+  margin: 0;
+  color: #111827;
+}
+
+.treat-header p {
+  margin: 4px 0 12px 0;
+  color: #6b7280;
+}
+
+.treat-treatment {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Table */
+
+.treat-table {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.treat-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.treat-row.header {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
+/* Status */
+
+.improved {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.worsened {
+  color: #dc2626;
+  font-weight: 600;
+}

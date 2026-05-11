@@ -1,0 +1,172 @@
+/* src/styles/appointments.css */
+
+.appointments-page {
+  background: #f6f8fb;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* Header */
+.appointments-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #111827;
+}
+
+.appointments-header p {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Tabs */
+.tabs {
+  margin-top: 20px;
+  background: white;
+  padding: 6px;
+  border-radius: 12px;
+  display: inline-flex;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tab-btn:hover {
+  background: #f1f5f9;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* List */
+.appointments-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card */
+.appointment-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+/* Left */
+.card-left {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  /* background: #e5e7eb; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  /* color: #374151; */
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+.reason {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.date {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Right */
+.card-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Status */
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.completed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.scheduled {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.status.cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Buttons */
+.btn {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn.view {
+  background: #2563eb;
+  color: white;
+}
+
+.btn.reschedule {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+
+.btn.cancel {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: transparent;
+}
+
+/* Empty */
+.empty-state {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+}

@@ -1,0 +1,123 @@
+/* src/healthSummary/healthSummary.css */
+
+.health-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* Header */
+.health-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.health-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #111827;
+}
+
+/* Condition badge */
+.condition-badge {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Grid */
+.health-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Item */
+.health-item {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.label {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 4px 0;
+}
+
+.sub {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.note {
+  font-size: 12px;
+  color: #374151;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.big-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 6px 0;
+}
+/* ===== Health Score Meter ===== */
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-top: 8px;
+}
+
+.score-svg {
+  transform: rotate(-90deg);
+}
+
+.score-progress {
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.score-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.score-label {
+  font-size: 12px;
+  font-weight: 600;
+}

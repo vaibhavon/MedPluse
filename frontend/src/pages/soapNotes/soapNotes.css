@@ -1,0 +1,118 @@
+/* src/soapNotes/soapNotes.css */
+
+.soap-page {
+  background: #f6f8fb;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* ===== Editor ===== */
+
+.soap-editor {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.soap-section {
+  margin-bottom: 16px;
+}
+
+.soap-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.soap-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  resize: vertical;
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-save {
+  background: #2563eb;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #e5e7eb;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== History ===== */
+
+.soap-history {
+  margin-top: 24px;
+}
+
+.soap-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.soap-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.soap-block {
+  font-size: 13px;
+  color: #374151;
+  margin: 4px 0;
+}
+
+/* ===== Actions ===== */
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-edit {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.empty {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}

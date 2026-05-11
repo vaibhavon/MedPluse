@@ -1,0 +1,16 @@
+/* MachineryPage.css */
+.machinery-page h1 {
+  font-size: 52px;
+  margin-bottom: 16px;
+}
+
+.machinery-page p {
+  color: #6b7280;
+  margin-bottom: 40px;
+}
+
+.machinery-page{
+background-color: white;
+padding: 80px 0;
+height: 80vh;
+}

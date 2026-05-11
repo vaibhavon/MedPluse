@@ -1,0 +1,55 @@
+.addtest {
+  /* Layout & Sizing */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  width:auto; /* Spans the width of your form sidebar */
+  
+  /* Typography */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  
+  /* Styling */
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  /* Smooth Transitions */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 
+              0 2px 4px -1px rgba(37, 99, 235, 0.1);
+  
+  /* Prevent text selection */
+  user-select: none;
+}
+
+/* Hover State - Lifts slightly and brightens */
+.addtest:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+/* Active State - "Presses" down into the page */
+.addtest:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px -1px rgba(37, 99, 235, 0.2);
+}
+
+/* Focus State - Accessibility for keyboard users */
+.addtest:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.4);
+}
+
+/* Disabled State - For when the form is incomplete */
+.addtest:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

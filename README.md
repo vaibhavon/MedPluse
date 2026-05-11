@@ -1,18 +1,95 @@
-# React + Vite
+# MedPulse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MedPulse is a MERN hospital management system with a separated React frontend and Express/MongoDB backend.
 
-Currently, two official plugins are available:
+## Folder Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```text
+medPulse/
+├── frontend/                 # React + Vite app
+│   ├── public/
+│   ├── src/
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.js
+├── backend/                  # Express API
+│   ├── models/
+│   ├── routes/
+│   ├── seed/
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+├── render.yaml               # Render blueprint for frontend + backend
+├── Dockerfile
+├── docker-compose.yml
+├── nginx.conf
+└── package.json              # Root workspace scripts
+```
 
-## React Compiler
+## Local Setup
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+npm install
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+npm run dev
+```
 
-Note: This will impact Vite dev & build performances.
+Frontend: `http://localhost:5173`
+Backend: `http://localhost:5000`
+Health check: `http://localhost:5000/health`
 
-## Expanding the ESLint configuration
+## Environment Variables
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Backend (`backend/.env`):
+
+```env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/medpulse
+CORS_ORIGIN=http://localhost:5173
+EMAIL_USER=
+EMAIL_PASS=
+```
+
+Frontend (`frontend/.env`):
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+## Scripts
+
+```bash
+npm run dev              # Start frontend and backend
+npm run dev:frontend     # Start only frontend
+npm run dev:backend      # Start only backend
+npm run build            # Build frontend
+npm run start            # Start backend
+npm run lint             # Lint frontend
+npm run test             # Syntax-check backend server
+```
+
+## Render Deployment
+
+This repo includes `render.yaml` for a Render Blueprint:
+
+1. Push the repo to GitHub.
+2. In Render, create a new Blueprint and select this repo.
+3. Set backend secrets when prompted:
+   - `MONGODB_URI`
+   - `CORS_ORIGIN` as your frontend URL, for example `https://medpulse-frontend.onrender.com`
+   - `EMAIL_USER`
+   - `EMAIL_PASS`
+4. Set frontend `VITE_API_URL` as your backend URL, for example `https://medpulse-backend.onrender.com`.
+
+The frontend has SPA rewrites for Render, Vercel, and Netlify-style static hosting.
+
+## Docker
+
+```bash
+docker compose up --build
+```
+
+Frontend: `http://localhost:3000`
+Backend: `http://localhost:5000`

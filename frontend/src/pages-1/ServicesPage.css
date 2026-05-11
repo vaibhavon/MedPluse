@@ -1,0 +1,9 @@
+/* ServicesPage.css */
+.services-page h1 {
+  font-size: 52px;
+  padding-top: 40px;
+}
+
+.services-page {
+  background: #f9fbfd;
+}

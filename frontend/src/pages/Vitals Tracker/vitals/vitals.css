@@ -1,0 +1,85 @@
+/* src/vitals/vitals.css */
+
+.vitals-page {
+  background: #f6f8fb;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.vitals-form {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.vitals-form input,
+.vitals-form button,
+.date-filter select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.vitals-form button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.vitals-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+/* List */
+.vitals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vital-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.vital-card.latest {
+  border-left: 4px solid #2563eb;
+}
+
+.vital-date {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.vital-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.latest-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.empty {
+  background: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 14px;
+}

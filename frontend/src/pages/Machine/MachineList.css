@@ -1,0 +1,115 @@
+/* MachineList.css */
+
+/* 1. Layout Fundamentals */
+.machine-container {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+.machine-list-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* 2. Controls Bar - Flex Wrap is Key */
+.controls-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap; /* Prevents controls from cutting off on mobile */
+}
+
+.controls-bar input {
+  flex: 1;
+  min-width: 200px; /* Ensures search bar doesn't get too tiny */
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.controls-bar select {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* 3. Main Content Grid Logic */
+.main-content {
+  display: grid;
+  /* Sidebar stays 320px, Grid takes the rest */
+  grid-template-columns: 320px 1fr; 
+  gap: 30px;
+  align-items: start;
+}
+
+.form-sidebar {
+  position: sticky;
+  top: 20px; /* Stays fixed while you scroll through many machines */
+  z-index: 10;
+}
+
+/* 4. The Responsive Machine Grid */
+.machine-grid {
+  display: grid;
+  /* Automatically fits cards. Cards never shrink below 280px */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 1px;
+}
+
+/* 5. Machine Card - Overflow Protection */
+.machine-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+  min-width: 0; /* Important for word-wrap inside grid items */
+  word-wrap: break-word; /* Forces long IDs or names to wrap */
+  overflow: hidden; /* Contains any accidental spills */
+}
+
+.machine-card h3 {
+  margin-top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds "..." if name is too long */
+}
+
+/* Empty State */
+.no-results {
+  grid-column: 1 / -1;
+  padding: 40px;
+  text-align: center;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+/* 6. Responsive Breakpoints */
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr; /* Stack form on top of list for mobile */
+  }
+  
+  .form-sidebar {
+    position: static; /* Remove sticky on mobile */
+    margin-bottom: 20px;
+  }
+}

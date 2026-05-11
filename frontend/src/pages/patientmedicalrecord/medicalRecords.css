@@ -1,0 +1,119 @@
+/* src/medicalRecords/medicalRecords.css */
+
+.records-page {
+  background: #f6f8fb;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* Header */
+.records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.records-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #111827;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+/* List */
+.records-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card */
+.record-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Left */
+.record-left {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.file-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.file-badge.pdf {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.file-badge.image {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* Info */
+.record-info h3 {
+  margin: 0;
+  font-size: 15px;
+  color: #111827;
+}
+
+.meta {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 2px 0;
+}
+
+.date {
+  font-size: 12px;
+  color: #374151;
+}
+
+/* Actions */
+.record-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn.preview {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+
+.btn.download {
+  background: #2563eb;
+  color: white;
+}

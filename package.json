@@ -1,36 +1,40 @@
 {
-  "name": "package.json",
+  "name": "medpulse",
+  "version": "1.0.0",
+  "description": "MedPulse - MERN hospital management system",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.11.2",
-    "jspdf": "^4.0.0",
-    "lucide-react": "^0.562.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.12.0",
-    "recharts": "^3.6.0"
+    "dev": "concurrently \"npm run dev --workspace @medpulse/backend\" \"npm run dev --workspace @medpulse/frontend\"",
+    "dev:frontend": "npm run dev --workspace @medpulse/frontend",
+    "dev:backend": "npm run dev --workspace @medpulse/backend",
+    "build": "npm run build --workspace @medpulse/frontend",
+    "start": "npm run start --workspace @medpulse/backend",
+    "lint": "npm run lint --workspace @medpulse/frontend",
+    "test": "npm run test --workspace @medpulse/backend"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "autoprefixer": "^10.4.23",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "vite": "^7.2.4"
-  }
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaibhavon/medPulse.git"
+  },
+  "keywords": [
+    "hospital",
+    "management",
+    "mern",
+    "react",
+    "node",
+    "mongodb"
+  ],
+  "author": "MedPulse Team",
+  "license": "ISC"
 }
