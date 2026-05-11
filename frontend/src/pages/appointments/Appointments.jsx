@@ -7,7 +7,7 @@ import {
   updateAppointment
 } from "../../utils/appoinmentStorage";
 
-import "./appointments.css";
+import "./Appointments.css";
 
 /* ---------------- DEFAULT DATA ---------------- */
 
