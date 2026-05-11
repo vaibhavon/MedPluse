@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { getPatientById, updatePatient } from "../../utils/patientStorage";
 import { useState, useEffect, useMemo } from "react";
-import "./patients.css";
+import "./Patients.css";
 
 export default function EditPatient() {
   const { id } = useParams();

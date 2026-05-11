@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addPatient } from "../../utils/patientStorage";
-import "./patients.css";
+import "./Patients.css";
 
 export default function AddPatient() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getPatientById, addMedicalHistory, getMedicalHistory } from "../../utils/patientStorage";
 import { useState, useEffect, useMemo } from "react";
 import jsPDF from "jspdf";
-import "./patients.css";
+import "./Patients.css";
 
 export default function PatientProfile() {
   const { id } = useParams();
