@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./billing.css";
+import "./Billing.css";
 
 export default function CreateInvoice() {
 
