@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStaff, saveStaff, deleteStaff } from "../../utils/staffStorage";
 import { demoStaff } from "./staffData";
-import "./staff.css";
+import "./Staff.css";
 
 export default function Staff() {
   const navigate = useNavigate();

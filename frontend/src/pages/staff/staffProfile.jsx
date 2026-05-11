@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { getStaffById, updateStaff } from "../../utils/staffStorage";
 import { useState, useEffect } from "react";
-import "./staff.css";
+import "./Staff.css";
 
 export default function StaffProfile() {
   const { id } = useParams();

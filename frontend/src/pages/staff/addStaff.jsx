@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addStaff } from "../../utils/staffStorage";
-import "./staff.css";
+import "./Staff.css";
 
 export default function AddStaff() {
   const navigate = useNavigate();
