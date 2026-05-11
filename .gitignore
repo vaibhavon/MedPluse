@@ -40,7 +40,6 @@ logs/
 Thumbs.db
 
 # Application specific
-/frontend/src/components-1/
 coverage/
 *.ntvs*
 *.njsproj

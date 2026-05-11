@@ -1,0 +1,130 @@
+/* Navbar.css */
+
+/* 1. Main Navigation Wrapper */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: white; 
+  backdrop-filter: blur(10px);           /* Glassmorphism effect */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  z-index: 10000;
+  width: 100%;
+}
+
+/* 2. Layout Container */
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 85px; /* Slightly taller for breathing room */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 3. Logo Styling */
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1f2937;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo span {
+  color: #2a9df4;
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+/* 4. Navigation Links */
+.ul-name {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ul-name li a {
+  text-decoration: none;
+  color: #4b5563; /* Softer dark grey */
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+}
+
+/* The Interactive Underline Hover Effect */
+
+.ul-name li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0; /* Starts from left (looks cleaner than center for nav) */
+  background-color: #2a9df4;
+  transition: width 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.ul-name li a:hover {
+  color: #2a9df4;
+}
+
+.ul-name li a:hover::after {
+  width: 100%;
+}
+
+/* 5. Appointment Button */
+.primary-btn {
+  height: 48px;
+  padding: 0 24px;
+  border: none;
+  background: #2a9df4;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(42, 157, 244, 0.2);
+}
+
+.primary-btn:hover {
+  background: #1e85d0;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(42, 157, 244, 0.3);
+}
+
+.primary-btn:active {
+  transform: translateY(-1px);
+}
+
+.secondary-btn{
+   height: 48px;
+  padding: 0 24px;
+  border: none;
+  background: #2a9df4;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(42, 157, 244, 0.2);
+}
+
+/* 6. Mobile Responsiveness (Basic) */
+@media (max-width: 768px) {
+  .ul-name {
+    display: none; /* Usually, you'd replace this with a hamburger menu */
+  }
+  
+  .nav-inner {
+    height: 70px;
+  }
+}

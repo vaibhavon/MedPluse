@@ -1,0 +1,190 @@
+.doctors-section {
+  background: #f9fbfd;
+  padding: 80px 0;
+}
+
+.doctors-header {
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+
+.doctors-header h2 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.doctors-header p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Card */
+.doctor-card {
+  background: #ffffff;
+  padding: 32px 24px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  position: relative;
+  animation: fadeUp 1s ease-in-out forwards;
+  animation-timeline: view();
+  scroll-behavior: smooth;
+  animation-range: entry 0% cover 70%;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20rem);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+}
+
+.doctor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Avatar */
+.avatar-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(135deg, #a5d8ff, #2a9df4);
+  border-radius: 50%;
+  margin: auto;
+  color: white;
+  font-size: 28px;
+}
+
+/* Rating Badge */
+.badge {
+  position: absolute;
+  bottom: 0;
+  right: calc(50% - 55px);
+  background: #00c897;
+  color: #ffffff;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* Text */
+.doctor-card h3 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.spec {
+  color: #2a9df4;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.doctor-info p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.availability {
+  font-style: italic;
+}
+
+/* Button */
+.doctor-btn {
+  margin-top: 20px;
+  height: 44px;
+  padding: 0 18px;
+  background: #2a9df4;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.doctor-btn:hover {
+  background: #1e86d8;
+}
+
+/* Action buttons container */
+.doctor-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* View profile button */
+.profile-btn {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #eaf6ff;
+  color: #2a9df4;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease;
+
+
+  margin-top: 20px;
+
+
+}
+
+.profile-btn:hover {
+  background: #dbeafe;
+}
+
+/* Subtle card top accent */
+.doctor-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #2a9df4, #00c897);
+  border-radius: 20px 20px 0 0;
+}
+
+.avtimg {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+}
