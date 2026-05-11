@@ -16,7 +16,7 @@ const mongoUri =
   process.env.MONGO_URI ||
   "mongodb://localhost:27017/medpulse";
 
-const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+const allowedOrigins = (process.env.CORS_ORIGIN || "https://medpluse-2.onrender.com")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);

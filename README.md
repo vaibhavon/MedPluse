@@ -35,7 +35,7 @@ cp frontend/.env.example frontend/.env
 npm run dev
 ```
 
-Frontend: `http://localhost:5173`
+Frontend: `https://medpluse-2.onrender.com`
 Backend: `http://localhost:5000`
 Health check: `http://localhost:5000/health`
 
@@ -47,7 +47,7 @@ Backend (`backend/.env`):
 NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/medpulse
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=https://medpluse-2.onrender.com
 EMAIL_USER=
 EMAIL_PASS=
 ```
