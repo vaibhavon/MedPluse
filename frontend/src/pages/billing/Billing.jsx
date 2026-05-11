@@ -7,7 +7,7 @@ import {
   updateInvoice,
   deleteInvoice
 } from "../../utils/billingStorage";
-import "./billing.css";
+import "./Billing.css";
 
 const demoInvoices = [
   {
