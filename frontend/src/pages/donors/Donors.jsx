@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getDonors, deleteDonor } from "../../utils/bloodStorage";
-import "./donors.css";
+import "./Donors.css";
 
 export default function Donors() {
   const [donors, setDonors] = useState(() => getDonors());
