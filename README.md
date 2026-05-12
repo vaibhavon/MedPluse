@@ -47,7 +47,7 @@ Backend (`backend/.env`):
 NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/medpulse
-CORS_ORIGIN=https://medpluse-2.onrender.com
+CORS_ORIGIN=http://localhost:5173
 EMAIL_USER=
 EMAIL_PASS=
 ```
@@ -89,14 +89,14 @@ If the frontend is deployed on Vercel and the API is deployed on Render:
 
 1. In Vercel, set `VITE_API_URL` to the Render backend URL, not the Vercel frontend URL.
 2. Also set `API_URL` to the same backend URL so the Vercel `/api/*` proxy can forward requests at runtime.
-3. In Render, set backend `CORS_ORIGIN` to the Vercel frontend URL.
+3. In Render, set backend `CORS_ORIGIN` to the exact Vercel frontend URL. For multiple frontends, separate URLs with commas.
 
 Example:
 
 ```env
 VITE_API_URL=https://medpulse-backend.onrender.com
 API_URL=https://medpulse-backend.onrender.com
-CORS_ORIGIN=https://your-frontend.vercel.app
+CORS_ORIGIN=https://med-pluse-frontend.vercel.app
 ```
 
 The login request should go to `/api/login`. A 405 from `/api/login` usually means the browser is hitting the frontend host instead of the Express backend.
