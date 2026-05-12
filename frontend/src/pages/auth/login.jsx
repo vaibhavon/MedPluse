@@ -48,7 +48,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch(apiUrl("/login"), {
+      const res = await fetch(apiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: id, password }),
@@ -75,7 +75,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch(apiUrl("/verify-otp"), {
+      const res = await fetch(apiUrl("/api/verify-otp"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: id, otp }),
