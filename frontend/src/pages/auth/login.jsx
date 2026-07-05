@@ -94,7 +94,7 @@ function Login() {
       const data = await res.json();
 
       if (data.success) {
-        dispatch(login({ system: "ERP", id, role: data.role }));
+        dispatch(login({ system: "ERP", id, role: data.role, token: data.token }));
         dispatch(switchSystem("ERP"));
 
         const roleRedirectMap = {
