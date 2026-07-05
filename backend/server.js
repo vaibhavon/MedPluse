@@ -56,6 +56,12 @@ const emailPassword = process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD;
 const resendApiKey = process.env.RESEND_API_KEY;
 const emailFrom = process.env.EMAIL_FROM || "MedPulse <onboarding@resend.dev>";
 
+// The demo accounts log in with non-deliverable IDs (admin@med.com, etc.),
+// so every OTP is delivered to one real inbox that the demo owner controls.
+// Override per-deployment via OTP_DELIVERY_EMAIL.
+const otpDeliveryEmail =
+  process.env.OTP_DELIVERY_EMAIL || "vaibhavgiradkar341@gmail.com";
+
 // SMTP fallback, used only when no Resend key is set. Raw SMTP (Gmail 587) is
 // blocked on most PaaS including Render, so send over Resend's HTTPS API in
 // production. Timeouts guarantee a blocked SMTP connection fails fast instead
@@ -78,9 +84,11 @@ const smtpTransporter =
 
 const emailConfigured = Boolean(resendApiKey || smtpTransporter);
 
-async function sendOtpEmail(to, otp) {
+async function sendOtpEmail(to, otp, account) {
   const subject = "MedPulse Login OTP";
-  const text = `Your OTP is ${otp}. It will expire in 5 minutes.`;
+  const text = `Your MedPulse login OTP${
+    account ? ` for ${account}` : ""
+  } is ${otp}. It will expire in 5 minutes.`;
 
   // Preferred path: Resend HTTPS API (works from Render; not SMTP-blocked).
   if (resendApiKey) {
@@ -179,7 +187,7 @@ const loginHandler = async (req, res) => {
 
     if (emailConfigured) {
       try {
-        await sendOtpEmail(email, otp);
+        await sendOtpEmail(otpDeliveryEmail, otp, email);
       } catch (mailErr) {
         console.error("OTP email failed:", mailErr.message);
 
