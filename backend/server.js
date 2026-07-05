@@ -114,34 +114,28 @@ async function sendOtpEmail(to, otp, account) {
   await transporter.sendMail({ from: emailFrom, to, subject, text });
 }
 
-mongoose
-  .connect(mongoUri)
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((err) => {
-    console.log("MongoDB connection error:", err.message);
-  });
-
-mongoose.connection.once("open", async () => {
+async function connectAndSeed() {
   try {
+    await mongoose.connect(mongoUri);
+    console.log("MongoDB connected successfully");
     await seedPatients();
     await seedDoctors();
     await seedUsers();
-  } catch (error) {
-    console.log("Seeding error:", error.message);
+  } catch (err) {
+    console.log("MongoDB connection/seeding error:", err.message);
   }
-});
+}
 
 function generateOTP() {
   // Cryptographically secure 6-digit code (100000-999999).
   return crypto.randomInt(100000, 1000000).toString();
 }
 
-// Rate limiters to blunt credential/OTP brute-forcing.
+// Rate limiters to blunt credential/OTP brute-forcing. Limits are env-tunable
+// (tests raise them so parallel requests are not throttled).
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: Number(process.env.LOGIN_RATE_MAX || 10),
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many attempts. Try again later." }
@@ -149,7 +143,7 @@ const loginLimiter = rateLimit({
 
 const otpLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: Number(process.env.OTP_RATE_MAX || 20),
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many attempts. Try again later." }
@@ -293,6 +287,14 @@ app.use(
   require("./routes/paitentRoutes")
 );
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Only connect to Mongo and start listening when run directly (`node server.js`).
+// When imported (e.g. by tests) the app is exported without side effects so the
+// test can wire up its own database and drive routes via supertest.
+if (require.main === module) {
+  connectAndSeed();
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
