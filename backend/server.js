@@ -53,7 +53,14 @@ const users = [
 
 const otpStore = {};
 const emailPassword = process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD;
-const transporter =
+const resendApiKey = process.env.RESEND_API_KEY;
+const emailFrom = process.env.EMAIL_FROM || "MedPulse <onboarding@resend.dev>";
+
+// SMTP fallback, used only when no Resend key is set. Raw SMTP (Gmail 587) is
+// blocked on most PaaS including Render, so send over Resend's HTTPS API in
+// production. Timeouts guarantee a blocked SMTP connection fails fast instead
+// of hanging the login request.
+const smtpTransporter =
   process.env.EMAIL_USER && emailPassword
     ? nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -62,9 +69,59 @@ const transporter =
         auth: {
           user: process.env.EMAIL_USER,
           pass: emailPassword
-        }
+        },
+        connectionTimeout: 7000,
+        greetingTimeout: 7000,
+        socketTimeout: 10000
       })
     : null;
+
+const emailConfigured = Boolean(resendApiKey || smtpTransporter);
+
+async function sendOtpEmail(to, otp) {
+  const subject = "MedPulse Login OTP";
+  const text = `Your OTP is ${otp}. It will expire in 5 minutes.`;
+
+  // Preferred path: Resend HTTPS API (works from Render; not SMTP-blocked).
+  if (resendApiKey) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ from: emailFrom, to, subject, text }),
+        signal: controller.signal
+      });
+
+      if (!response.ok) {
+        const detail = await response.text();
+        throw new Error(`Resend responded ${response.status}: ${detail}`);
+      }
+
+      return;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  // Fallback path: SMTP (works locally; usually blocked on Render).
+  if (smtpTransporter) {
+    await smtpTransporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to,
+      subject,
+      text
+    });
+    return;
+  }
+
+  throw new Error("No email transport configured");
+}
 
 mongoose
   .connect(mongoUri)
@@ -120,13 +177,19 @@ const loginHandler = async (req, res) => {
       expires: Date.now() + 5 * 60 * 1000
     };
 
-    if (transporter) {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "MedPulse Login OTP",
-        text: `Your OTP is ${otp}. It will expire in 5 minutes.`
-      });
+    if (emailConfigured) {
+      try {
+        await sendOtpEmail(email, otp);
+      } catch (mailErr) {
+        console.error("OTP email failed:", mailErr.message);
+
+        if (isProduction) {
+          return res.status(502).json({
+            success: false,
+            message: "Could not send OTP email. Please try again later."
+          });
+        }
+      }
     } else if (isProduction) {
       return res.status(500).json({
         success: false,
@@ -134,7 +197,10 @@ const loginHandler = async (req, res) => {
       });
     }
 
-    console.log("OTP sent:", otp);
+    // Never log the OTP in production (Render logs are retained).
+    if (!isProduction) {
+      console.log("OTP generated:", otp);
+    }
 
     return res.json({
       success: true,
