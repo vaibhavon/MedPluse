@@ -1,16 +1,31 @@
 const path = require("path");
+const crypto = require("crypto");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const rateLimit = require("express-rate-limit");
 
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const seedDoctors = require("./seed/defaultsDoctors");
 const seedPatients = require("./seed/defaultPaitents");
+const seedUsers = require("./seed/defaultUsers");
+const User = require("./models/User");
+const { authenticate, requireWriteRole } = require("./middleware/auth");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const isProduction = process.env.NODE_ENV === "production";
+
+const jwtSecret = process.env.JWT_SECRET || "dev-insecure-jwt-secret-change-me";
+if (isProduction && jwtSecret === "dev-insecure-jwt-secret-change-me") {
+  console.warn(
+    "WARNING: JWT_SECRET is not set in production; using an insecure default."
+  );
+}
 const mongoUri =
   process.env.MONGODB_URI ||
   process.env.MONGO_URI ||
@@ -44,14 +59,12 @@ app.use(
 );
 app.use(express.json());
 
-const users = [
-  { email: "admin@med.com", password: "123", role: "admin" },
-  { email: "doctor@med.com", password: "123", role: "doctor" },
-  { email: "patient@med.com", password: "123", role: "patient" },
-  { email: "reception@med.com", password: "123", role: "receptionist" }
-];
+// Render (and most PaaS) sit behind one proxy; trust it so req.ip reflects the
+// real client for rate limiting.
+app.set("trust proxy", 1);
 
 const otpStore = {};
+const MAX_OTP_ATTEMPTS = 5;
 const emailPassword = process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD;
 const emailUser = process.env.EMAIL_USER;
 
@@ -114,14 +127,33 @@ mongoose.connection.once("open", async () => {
   try {
     await seedPatients();
     await seedDoctors();
+    await seedUsers();
   } catch (error) {
     console.log("Seeding error:", error.message);
   }
 });
 
 function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  // Cryptographically secure 6-digit code (100000-999999).
+  return crypto.randomInt(100000, 1000000).toString();
 }
+
+// Rate limiters to blunt credential/OTP brute-forcing.
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: "Too many attempts. Try again later." }
+});
+
+const otpLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: "Too many attempts. Try again later." }
+});
 
 app.get("/", (req, res) => {
   res.send("MedPulse backend is running");
@@ -138,26 +170,28 @@ app.get("/health", (req, res) => {
 const loginHandler = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = users.find(
-      (candidate) => candidate.email === email && candidate.password === password
-    );
+    const normalizedEmail = (email || "").toLowerCase().trim();
 
-    if (!user) {
+    const user = await User.findOne({ email: normalizedEmail });
+    const passwordValid =
+      user && (await bcrypt.compare(password || "", user.passwordHash));
+
+    if (!user || !passwordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const otp = generateOTP();
-    const isProduction = process.env.NODE_ENV === "production";
 
-    otpStore[email] = {
+    otpStore[normalizedEmail] = {
       otp,
       role: user.role,
-      expires: Date.now() + 5 * 60 * 1000
+      expires: Date.now() + 5 * 60 * 1000,
+      attempts: 0
     };
 
     if (emailConfigured) {
       try {
-        await sendOtpEmail(otpDeliveryEmail, otp, email);
+        await sendOtpEmail(otpDeliveryEmail, otp, normalizedEmail);
       } catch (mailErr) {
         console.error("OTP email failed:", mailErr.message);
 
@@ -195,40 +229,69 @@ const loginHandler = async (req, res) => {
   }
 };
 
-app.post("/login", loginHandler);
-app.post("/api/login", loginHandler);
+app.post("/login", loginLimiter, loginHandler);
+app.post("/api/login", loginLimiter, loginHandler);
 
 const verifyOtpHandler = (req, res) => {
   const { email, otp } = req.body;
-  const record = otpStore[email];
+  const normalizedEmail = (email || "").toLowerCase().trim();
+  const record = otpStore[normalizedEmail];
 
   if (!record) {
     return res.json({ success: false, message: "No OTP found" });
   }
 
   if (Date.now() > record.expires) {
-    delete otpStore[email];
+    delete otpStore[normalizedEmail];
     return res.json({ success: false, message: "OTP expired" });
   }
 
   if (record.otp !== otp) {
+    record.attempts += 1;
+
+    if (record.attempts >= MAX_OTP_ATTEMPTS) {
+      delete otpStore[normalizedEmail];
+      return res.json({
+        success: false,
+        message: "Too many incorrect attempts. Please log in again."
+      });
+    }
+
     return res.json({ success: false, message: "Invalid OTP" });
   }
 
   const { role } = record;
-  delete otpStore[email];
+  delete otpStore[normalizedEmail];
+
+  // Issue a short-lived JWT the frontend attaches to API requests.
+  const token = jwt.sign({ email: normalizedEmail, role }, jwtSecret, {
+    expiresIn: "8h"
+  });
 
   return res.json({
     success: true,
-    role
+    role,
+    token
   });
 };
 
-app.post("/verify-otp", verifyOtpHandler);
-app.post("/api/verify-otp", verifyOtpHandler);
+app.post("/verify-otp", otpLimiter, verifyOtpHandler);
+app.post("/api/verify-otp", otpLimiter, verifyOtpHandler);
 
-app.use("/api/doctors", require("./routes/doctorRoutes"));
-app.use("/api/patients", require("./routes/paitentRoutes"));
+// Protected resource APIs: any authenticated user can read; writes are limited
+// by role. Doctors are managed by admins; patients by admins and reception.
+app.use(
+  "/api/doctors",
+  authenticate,
+  requireWriteRole(["admin"]),
+  require("./routes/doctorRoutes")
+);
+app.use(
+  "/api/patients",
+  authenticate,
+  requireWriteRole(["admin", "receptionist"]),
+  require("./routes/paitentRoutes")
+);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
