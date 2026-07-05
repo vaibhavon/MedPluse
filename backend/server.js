@@ -97,17 +97,67 @@ const transporter =
 
 const emailConfigured = Boolean(transporter);
 
+const LOGO_PATH = path.join(__dirname, "assets", "medLogo.jpg");
+
 async function sendOtpEmail(to, otp, account) {
   if (!transporter) {
     throw new Error("No email transport configured");
   }
 
-  const subject = "MedPulse Login OTP";
-  const text = `Your MedPulse login OTP${
-    account ? ` for ${account}` : ""
-  } is ${otp}. It will expire in 5 minutes.`;
+  const roleLabel = account
+    ? account.charAt(0).toUpperCase() + account.slice(1)
+    : "";
+  const subject = "Your MedPulse Login OTP";
+  const text = `Your MedPulse login OTP is ${otp}. It expires in 5 minutes.`;
 
-  await transporter.sendMail({ from: emailFrom, to, subject, text });
+  const html = `
+  <div style="margin:0;padding:24px;background:#eef2f7;font-family:Arial,Helvetica,sans-serif;">
+    <div style="max-width:480px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:18px;">
+        <img src="cid:medpulseLogo" alt="MedPulse" width="56" height="56"
+             style="border-radius:12px;display:inline-block;" />
+        <div style="font-size:24px;font-weight:800;color:#0f172a;margin-top:8px;">
+          Med<span style="color:#2a9df4;">Pulse</span>
+        </div>
+        <div style="font-size:13px;color:#64748b;">Hospital Management System</div>
+      </div>
+
+      <div style="background:#ffffff;border-radius:14px;padding:28px 24px;text-align:center;
+                  box-shadow:0 6px 18px rgba(15,23,42,0.07);">
+        <p style="font-size:15px;color:#334155;margin:0;">
+          Use the one-time password below to sign in${
+            roleLabel ? ` as <b>${roleLabel}</b>` : ""
+          }.
+        </p>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;
+                    padding:18px;margin:20px 0;">
+          <span style="font-size:34px;font-weight:800;letter-spacing:10px;color:#0f172a;">
+            ${otp}
+          </span>
+        </div>
+
+        <p style="font-size:13px;color:#64748b;margin:0;">
+          This code expires in <b>5 minutes</b>. If you didn't request it, you can ignore this email.
+        </p>
+      </div>
+
+      <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:16px;">
+        © MedPulse Hospital · Automated message, please do not reply.
+      </p>
+    </div>
+  </div>`;
+
+  await transporter.sendMail({
+    from: emailFrom,
+    to,
+    subject,
+    text,
+    html,
+    attachments: [
+      { filename: "medpulse.jpg", path: LOGO_PATH, cid: "medpulseLogo" }
+    ]
+  });
 }
 
 async function connectAndSeed() {
