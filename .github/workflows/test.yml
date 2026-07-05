@@ -8,7 +8,9 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned to 22.04: mongodb-memory-server's MongoDB binary does not reliably
+    # run on ubuntu-latest (24.04) due to OpenSSL/library differences.
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
