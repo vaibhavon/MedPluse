@@ -20,6 +20,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  gap: 18px;
 }
 
 /* 3. Logo Styling */
@@ -42,10 +43,11 @@
 /* 4. Navigation Links */
 .ul-name {
   display: flex;
-  gap: 32px;
+  gap: 22px;
   list-style: none;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 
 .ul-name li a {
@@ -82,7 +84,7 @@
 /* 5. Appointment Button */
 .primary-btn {
   height: 48px;
-  padding: 0 24px;
+  padding: 0 20px;
   border: none;
   background: #2a9df4;
   color: white;
@@ -118,13 +120,106 @@
   box-shadow: 0 4px 15px rgba(42, 157, 244, 0.2);
 }
 
-/* 6. Mobile Responsiveness (Basic) */
-@media (max-width: 768px) {
-  .ul-name {
-    display: none; /* Usually, you'd replace this with a hamburger menu */
-  }
-  
+/* Hamburger + action groups (desktop defaults) */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  background: #eef2f7;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-menu-actions {
+  display: none;
+}
+
+/* ===== Mobile / tablet: hamburger dropdown ===== */
+@media (max-width: 1024px) {
   .nav-inner {
-    height: 70px;
+    height: auto;
+    min-height: 72px;
+    padding: 12px 18px;
+    justify-content: space-between;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .ul-name {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    background: #ffffff;
+    border-top: 1px solid #eef2f7;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+    padding: 8px 0;
+    display: none;
+  }
+
+  .ul-name.open {
+    display: flex;
+  }
+
+  .ul-name li {
+    width: 100%;
+  }
+
+  .ul-name li a {
+    display: block;
+    padding: 14px 22px;
+    font-size: 1rem;
+  }
+
+  .ul-name li a::after {
+    display: none;
+  }
+
+  .nav-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 22px 6px;
+    margin-top: 6px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .nav-menu-actions .primary-btn {
+    width: 100%;
+    height: 46px;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-inner {
+    min-height: 64px;
+    padding: 10px 14px;
+  }
+
+  .logo {
+    font-size: 1.35rem;
   }
 }

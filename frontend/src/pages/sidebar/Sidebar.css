@@ -1,10 +1,14 @@
 .sidebar {
-  width: 30%;
+  width: 280px;
+  flex: 0 0 280px;
   background: #ffffff;
   border-right: 1px solid #eee;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .logo-sidebar {
@@ -12,12 +16,15 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 12px;
 }
 
 .logo-sidebar img {
-  margin-left: 0px;
-  width: 30%;
-  height: 20%;
+  margin-left: 0;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .logo-sidebar h2 {
@@ -29,13 +36,31 @@
   color: #777;
 }
 
+/* Drawer close button — only visible in the mobile drawer */
+.sidebar-close {
+  display: none;
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.sidebar-close:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
 .menu {
   list-style: none;
   padding: 0 12px;
+  margin: 0;
 }
 
 .menu li {
-  padding: 12px 14px;
+  padding: 0;
   border-radius: 10px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -44,11 +69,13 @@
 
 .menu li a {
   display: block;
-  padding: 15px 18px;
+  padding: 13px 16px;
   border-radius: 10px;
   color: inherit;
   text-decoration: none;
-  letter-spacing: 2px;
+  letter-spacing: 0;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 .menu li a.active {
@@ -73,6 +100,16 @@
   align-items: center;
   padding: 16px;
   border-top: 1px solid #eee;
+  min-width: 0;
+}
+
+.profile small,
+.profile p {
+  display: block;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .admin-user {
@@ -99,11 +136,11 @@
 }
 
 .logout {
-  width: 80%;
-  padding: 15px 14px;
+  width: calc(100% - 24px);
+  padding: 13px 14px;
   border-radius: 10px;
   border: none;
-  margin-bottom: 6px;
+  margin: 10px 12px 6px;
   cursor: pointer;
   font-weight: 500;
   background: #f7c3c3;
@@ -114,4 +151,65 @@
 .logout:hover {
   background: rgb(239, 143, 143);
   color: White;
+}
+
+/* ===== Mobile / tablet: slide-in drawer ===== */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(84vw, 300px);
+    flex-basis: auto;
+    min-height: 100vh;
+    z-index: 11000;
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    box-shadow: 0 0 40px rgba(15, 23, 42, 0.18);
+    border-right: 1px solid #e5e7eb;
+    overflow-y: auto;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-sidebar {
+    padding: 18px 16px;
+  }
+
+  /* keep the normal vertical menu inside the drawer */
+  .menu {
+    display: block;
+    padding: 0 12px;
+    overflow: visible;
+  }
+
+  .menu li {
+    margin-bottom: 6px;
+  }
+
+  .menu li a {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    padding: 13px 16px;
+  }
+
+  .logout {
+    width: calc(100% - 24px);
+    margin: 12px 12px 8px;
+    padding: 13px 14px;
+  }
+
+  .profile {
+    display: flex;
+  }
 }

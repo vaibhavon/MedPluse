@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components-1/TempNavbar.jsx";
 import Footer from "./components-1/Footer.jsx";
@@ -45,6 +45,7 @@ import DoctorVisitTimeline from "./pages/DoctersTimeline/DoctorVisitTimeline";
 import SOAPNotesPage from "./pages/soapNotes/SOAPNotesPage";
 import DoctorTaskPanel from "./pages/doctorTasks/DoctorTaskPanel";
 import TreatmentEffectiveness from "./pages/treatmentTracker/TreatmentEffectiveness";
+import "./responsive.css";
 
 
 
@@ -52,9 +53,14 @@ import TreatmentEffectiveness from "./pages/treatmentTracker/TreatmentEffectiven
 
 
 function App() {
+  const { pathname } = useLocation();
+  // The dashboard/ERP shell has its own header + sidebar, so the public
+  // marketing navbar and footer are hidden there.
+  const hideChrome = pathname.startsWith("/dashboard");
+
   return (
     <>
-      <Navbar />
+      {!hideChrome && <Navbar />}
 
       <Routes>
 
@@ -120,7 +126,7 @@ function App() {
 
       </Routes>
 
-      <Footer />
+      {!hideChrome && <Footer />}
     </>
   );
 }
