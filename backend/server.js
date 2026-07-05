@@ -53,8 +53,14 @@ const users = [
 
 const otpStore = {};
 const emailPassword = process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD;
-const resendApiKey = process.env.RESEND_API_KEY;
-const emailFrom = process.env.EMAIL_FROM || "MedPulse <onboarding@resend.dev>";
+const emailUser = process.env.EMAIL_USER;
+
+// SMTP connection details are configurable so the same nodemailer setup can
+// use Gmail locally and a Render-friendly SMTP provider (Brevo, Mailgun,
+// Resend SMTP, ...) in production, where Gmail's SMTP ports are blocked.
+const emailHost = process.env.EMAIL_HOST || "smtp.gmail.com";
+const emailPort = Number(process.env.EMAIL_PORT || 587);
+const emailFrom = process.env.EMAIL_FROM || emailUser;
 
 // The demo accounts log in with non-deliverable IDs (admin@med.com, etc.),
 // so every OTP is delivered to one real inbox that the demo owner controls.
@@ -62,18 +68,16 @@ const emailFrom = process.env.EMAIL_FROM || "MedPulse <onboarding@resend.dev>";
 const otpDeliveryEmail =
   process.env.OTP_DELIVERY_EMAIL || "vaibhavgiradkar341@gmail.com";
 
-// SMTP fallback, used only when no Resend key is set. Raw SMTP (Gmail 587) is
-// blocked on most PaaS including Render, so send over Resend's HTTPS API in
-// production. Timeouts guarantee a blocked SMTP connection fails fast instead
-// of hanging the login request.
-const smtpTransporter =
-  process.env.EMAIL_USER && emailPassword
+// Timeouts guarantee a blocked/unreachable SMTP server fails fast instead of
+// hanging the login request (Render blocks Gmail's SMTP ports).
+const transporter =
+  emailUser && emailPassword
     ? nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
+        host: emailHost,
+        port: emailPort,
+        secure: emailPort === 465,
         auth: {
-          user: process.env.EMAIL_USER,
+          user: emailUser,
           pass: emailPassword
         },
         connectionTimeout: 7000,
@@ -82,53 +86,19 @@ const smtpTransporter =
       })
     : null;
 
-const emailConfigured = Boolean(resendApiKey || smtpTransporter);
+const emailConfigured = Boolean(transporter);
 
 async function sendOtpEmail(to, otp, account) {
+  if (!transporter) {
+    throw new Error("No email transport configured");
+  }
+
   const subject = "MedPulse Login OTP";
   const text = `Your MedPulse login OTP${
     account ? ` for ${account}` : ""
   } is ${otp}. It will expire in 5 minutes.`;
 
-  // Preferred path: Resend HTTPS API (works from Render; not SMTP-blocked).
-  if (resendApiKey) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
-
-    try {
-      const response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ from: emailFrom, to, subject, text }),
-        signal: controller.signal
-      });
-
-      if (!response.ok) {
-        const detail = await response.text();
-        throw new Error(`Resend responded ${response.status}: ${detail}`);
-      }
-
-      return;
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-
-  // Fallback path: SMTP (works locally; usually blocked on Render).
-  if (smtpTransporter) {
-    await smtpTransporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject,
-      text
-    });
-    return;
-  }
-
-  throw new Error("No email transport configured");
+  await transporter.sendMail({ from: emailFrom, to, subject, text });
 }
 
 mongoose
