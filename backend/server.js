@@ -5,15 +5,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const rateLimit = require("express-rate-limit");
 
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const seedDoctors = require("./seed/defaultsDoctors");
 const seedPatients = require("./seed/defaultPaitents");
-const seedUsers = require("./seed/defaultUsers");
-const User = require("./models/User");
 const { authenticate, requireWriteRole } = require("./middleware/auth");
 
 const app = express();
@@ -75,11 +72,10 @@ const emailHost = process.env.EMAIL_HOST || "smtp.gmail.com";
 const emailPort = Number(process.env.EMAIL_PORT || 587);
 const emailFrom = process.env.EMAIL_FROM || emailUser;
 
-// The demo accounts log in with non-deliverable IDs (admin@med.com, etc.),
-// so every OTP is delivered to one real inbox that the demo owner controls.
-// Override per-deployment via OTP_DELIVERY_EMAIL.
-const otpDeliveryEmail =
-  process.env.OTP_DELIVERY_EMAIL || "vaibhavgiradkar341@gmail.com";
+// Demo login: any email + this shared password + a self-selected role. The OTP
+// is delivered to whatever email the user enters (sent from EMAIL_USER).
+const DEMO_PASSWORD = process.env.DEMO_USER_PASSWORD || "1234";
+const ALLOWED_ROLES = ["admin", "doctor", "patient", "receptionist"];
 
 // Timeouts guarantee a blocked/unreachable SMTP server fails fast instead of
 // hanging the login request (Render blocks Gmail's SMTP ports).
@@ -120,7 +116,6 @@ async function connectAndSeed() {
     console.log("MongoDB connected successfully");
     await seedPatients();
     await seedDoctors();
-    await seedUsers();
   } catch (err) {
     console.log("MongoDB connection/seeding error:", err.message);
   }
@@ -163,29 +158,34 @@ app.get("/health", (req, res) => {
 
 const loginHandler = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
     const normalizedEmail = (email || "").toLowerCase().trim();
 
-    const user = await User.findOne({ email: normalizedEmail });
-    const passwordValid =
-      user && (await bcrypt.compare(password || "", user.passwordHash));
+    if (!normalizedEmail) {
+      return res.status(400).json({ message: "Email is required" });
+    }
 
-    if (!user || !passwordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!ALLOWED_ROLES.includes(role)) {
+      return res.status(400).json({ message: "Please select a role" });
+    }
+
+    if (password !== DEMO_PASSWORD) {
+      return res.status(401).json({ message: "Invalid password" });
     }
 
     const otp = generateOTP();
 
     otpStore[normalizedEmail] = {
       otp,
-      role: user.role,
+      role,
       expires: Date.now() + 5 * 60 * 1000,
       attempts: 0
     };
 
     if (emailConfigured) {
       try {
-        await sendOtpEmail(otpDeliveryEmail, otp, normalizedEmail);
+        // Deliver the OTP to the email the user entered.
+        await sendOtpEmail(normalizedEmail, otp, role);
       } catch (mailErr) {
         console.error("OTP email failed:", mailErr.message);
 

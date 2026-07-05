@@ -18,6 +18,7 @@ function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
+  const [role, setRole] = useState("");
   const [showOtpBox, setShowOtpBox] = useState(false);
 
   // INQUIRY STATES
@@ -45,13 +46,19 @@ function Login() {
     if (e) e.preventDefault();
     setError("");
     setSuccess("");
+
+    if (!role) {
+      setError("Please select a role first");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await fetch(apiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: id, password }),
+        body: JSON.stringify({ email: id, password, role }),
       });
 
       const data = await res.json();
@@ -151,7 +158,7 @@ function Login() {
             
             <input
               type="email"
-              placeholder="ERP Email ID"
+              placeholder="Your Email ID"
               value={id}
               onChange={(e) => setId(e.target.value)}
               disabled={showOtpBox}
@@ -159,12 +166,36 @@ function Login() {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="1234"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={showOtpBox}
               required
             />
+
+            {/* ROLE SELECTOR */}
+            {!showOtpBox && (
+              <div className="role-select">
+                <span className="role-label">Login as</span>
+                <div className="role-options">
+                  {[
+                    { key: "admin", label: "Admin" },
+                    { key: "doctor", label: "Doctor" },
+                    { key: "patient", label: "Patient" },
+                    { key: "receptionist", label: "Reception" },
+                  ].map((r) => (
+                    <button
+                      type="button"
+                      key={r.key}
+                      className={`role-btn ${role === r.key ? "active" : ""}`}
+                      onClick={() => setRole(r.key)}
+                    >
+                      {r.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* OTP BOX */}
             {showOtpBox && (
@@ -193,10 +224,10 @@ function Login() {
               </div>
             )}
 
-            {/* DEFAULT LOGIN BUTTON */}
+            {/* GENERATE OTP BUTTON */}
             {!showOtpBox && (
               <button className="container-button" type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Log In"}
+                {loading ? "Sending OTP..." : "Generate OTP"}
               </button>
             )}
 
