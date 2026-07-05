@@ -10,7 +10,7 @@ import {
   User
 } from "lucide-react";
 
-import { apiUrl } from "../../config/api";
+import { apiUrl, authHeaders } from "../../config/api";
 import "./Patients.css";
 
 export default function Patients() {
@@ -31,9 +31,11 @@ export default function Patients() {
   // FETCH ALL PATIENTS FROM MONGODB
   const fetchPatients = async () => {
     try {
-      const res = await fetch(apiUrl("/api/patients"));
+      const res = await fetch(apiUrl("/api/patients"), {
+        headers: { ...authHeaders() }
+      });
       const data = await res.json();
-      setPatients(data);
+      setPatients(Array.isArray(data) ? data : []);
     } catch (error) {
       console.log("Error fetching patients:", error);
     }
@@ -54,7 +56,8 @@ export default function Patients() {
       await fetch(apiUrl("/api/patients"), {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          ...authHeaders()
         },
         body: JSON.stringify({
           patientId: "P" + Date.now(),
@@ -86,7 +89,8 @@ export default function Patients() {
     if (window.confirm("Delete this patient?")) {
       try {
         await fetch(apiUrl(`/api/patients/${id}`), {
-          method: "DELETE"
+          method: "DELETE",
+          headers: { ...authHeaders() }
         });
         fetchPatients();
       } catch (error) {
