@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: mongo:7-alpine
+    image: mongo:7
     container_name: medpulse-mongo
     ports:
       - "27017:27017"

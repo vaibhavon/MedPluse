@@ -1,6 +1,16 @@
 # MedPulse
 
-MedPulse is a MERN hospital management system with a separated React frontend and Express/MongoDB backend.
+MedPulse – Healthcare Management System, a MERN hospital management app with a separated React frontend and Express/MongoDB backend.
+
+**Live app:** https://med-pluse-frontend.vercel.app/
+
+## Tech Stack
+
+| Layer | Technology | Hosting |
+| --- | --- | --- |
+| Frontend | React (Vite), Redux Toolkit, React Router | Vercel |
+| Backend | Node.js, Express.js (REST API) | Render |
+| Database | MongoDB with Mongoose | MongoDB Atlas |
 
 ## Folder Structure
 

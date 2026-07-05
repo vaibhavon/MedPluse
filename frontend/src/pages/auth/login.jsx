@@ -58,7 +58,17 @@ function Login() {
 
       if (data.otpRequired) {
         setShowOtpBox(true);
-        setSuccess("OTP sent to your email.");
+
+        if (data.devOtp) {
+          // Dev mode: the backend can't deliver mail to the demo test
+          // accounts, so it returns the OTP inline. Auto-fill it so the
+          // login flow is usable without a real inbox. In production the
+          // backend omits devOtp and this branch never runs.
+          setOtp(data.devOtp);
+          setSuccess(`Dev mode: OTP auto-filled (${data.devOtp}). Click Verify OTP.`);
+        } else {
+          setSuccess("OTP sent to your email.");
+        }
       } else {
         setError(data.message || "Login failed");
       }
