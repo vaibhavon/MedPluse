@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
+import { X } from "lucide-react";
 import { logout } from "../../redux/authSlice";
 import medlogo from "../../assets/medLogo.jpg";
 import "./Sidebar.css";
 
-export default function Sidebar() {
+export default function Sidebar({ open = false, onClose = () => {} }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,6 +15,7 @@ export default function Sidebar() {
 
   /* ================= LOGOUT ================= */
   const handleLogout = () => {
+    onClose();
     dispatch(logout());
     navigate("/login");
   };
@@ -66,7 +68,7 @@ export default function Sidebar() {
 
   /* ================= UI ================= */
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
       <div>
         {/* ===== Logo ===== */}
         <div className="logo-sidebar">
@@ -75,6 +77,15 @@ export default function Sidebar() {
             <h2>MedPulse</h2>
             <span>Hospital ERP</span>
           </div>
+
+          {/* Close button (mobile drawer only) */}
+          <button
+            className="sidebar-close"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <X size={22} />
+          </button>
         </div>
 
         {/* ===== Dynamic Menu ===== */}
@@ -82,7 +93,7 @@ export default function Sidebar() {
           {menuItems.length > 0 ? (
             menuItems.map((item) => (
               <li key={item.to}>
-                <NavLink to={item.to}>{item.label}</NavLink>
+                <NavLink to={item.to} onClick={onClose}>{item.label}</NavLink>
               </li>
             ))
           ) : (

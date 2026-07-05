@@ -2,13 +2,18 @@ name: Build and Test
 
 on:
   push:
-    branches: [main, develop]
+    branches: ["**"]
   pull_request:
-    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned to 22.04: mongodb-memory-server's MongoDB binary does not reliably
+    # run on ubuntu-latest (24.04) due to OpenSSL/library differences.
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:

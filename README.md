@@ -1,26 +1,14 @@
-# 🏥 MedPulse – Healthcare Management System
+# MedPulse – Healthcare Management System
 
-<div align="center">
-
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb)
-![Redux](https://img.shields.io/badge/Redux-Toolkit-764ABC?style=for-the-badge&logo=redux)
-![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
-
-### Modern MERN-based Hospital ERP & Healthcare Management Platform
+# Modern MERN-based Hospital ERP & Healthcare Management Platform
 
 A scalable healthcare management system built using the **MERN Stack**, designed to simplify hospital operations through secure authentication, role-based dashboards, patient management, appointment scheduling, and administrative automation.
 
-🌐 **Live Demo:** https://med-pluse-frontend.vercel.app/
-
-</div>
-
----
+🌐 **Live App:** https://med-pluse-frontend.vercel.app/
 
 # 📖 Overview
 
-MedPulse is a **full-stack Hospital ERP and Healthcare Management System** developed to centralize hospital operations into a single digital platform.
+MedPulse is a **Full-Stack Hospital ERP and Healthcare Management System** developed to centralize hospital operations into a single digital platform.
 
 The application provides dedicated portals for **Administrators, Doctors, and Patients**, enabling secure access to medical records, appointment scheduling, hospital management, and patient services.
 
@@ -161,7 +149,6 @@ MedPulse/
 └── README.md
 ```
 
----
 
 # 📊 System Modules
 
