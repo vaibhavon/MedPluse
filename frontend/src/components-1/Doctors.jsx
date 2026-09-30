@@ -50,7 +50,7 @@ export default function Doctors() {
           {doctors.map((d) => (
             <div className="doctor-card" key={d.id}>
               <div className="avatar-wrapper">
-                <div className="avatar"><img src={d.img} alt="" className="avtimg" /></div>
+                <div className="avatar"><img src={d.img} alt="" className="avtimg" loading="lazy" decoding="async" /></div>
                 <span className="badge">⭐ 5.0</span>
               </div>
 

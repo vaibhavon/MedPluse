@@ -43,7 +43,7 @@ export default function Testimonials() {
               <p>“{t.text}”</p>
               
               <div className="patient-info">
-                <img src={t.img} alt={t.name} className="patient-img" />
+                <img src={t.img} alt={t.name} className="patient-img" loading="lazy" decoding="async" />
                 <div>
                   <strong>{t.name}</strong>
                   <span>{t.role}</span>

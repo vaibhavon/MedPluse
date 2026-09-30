@@ -40,6 +40,7 @@ export default function About() {
             alt="Doctors in surgery" 
             className="main-about-img"
             loading="lazy"
+            decoding="async"
           />
           <div className="floating-badge">
             <span className="years">15+</span>

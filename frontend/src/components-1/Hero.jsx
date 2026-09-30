@@ -28,7 +28,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-imgbox">
-          <img src={heroimg} alt="Medical Professional" className="hero-img" />
+          <img src={heroimg} alt="Medical Professional" className="hero-img" loading="eager" fetchPriority="high" decoding="async" />
           {/* Floating decorative elements */}
           <div className="floating-card top-right">
             <span>4.9 ⭐</span>

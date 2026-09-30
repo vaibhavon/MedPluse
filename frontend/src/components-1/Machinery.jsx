@@ -40,7 +40,7 @@ export default function Machinery() {
             >
               <div className="machine-card">
                 <div className="machine-img-container">
-                  <img src={m.img} alt={m.name} className="machine-img" />
+                  <img src={m.img} alt={m.name} className="machine-img" loading="lazy" decoding="async" />
                   <span className="machine-tag">{m.tag}</span>
                 </div>
                 <div className="machine-info">
