@@ -30,6 +30,21 @@ const mockRecentTasks = [
     id: "3",
     text: "Complete SOAP note — Amit Patel",
     time: "1 hour ago"
+  },
+  {
+    id: "4",
+    text: "Approve prescription refill — Neha Kapoor",
+    time: "2 hours ago"
+  },
+  {
+    id: "5",
+    text: "Review MRI report — Suresh Nair",
+    time: "3 hours ago"
+  },
+  {
+    id: "6",
+    text: "Call patient about lab results — Kavita Joshi",
+    time: "5 hours ago"
   }
 ];
 

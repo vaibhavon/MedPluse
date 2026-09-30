@@ -82,14 +82,14 @@ export default function ServiceDetail() {
           <h3>Why You Need This Service</h3>
           <ul>
             {service.why.map((item) => (
-              <li key={item}>✔ {item}</li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
 
           <h3>How We Provide Care</h3>
           <ul>
             {service.how.map((item) => (
-              <li key={item}>✔ {item}</li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
 

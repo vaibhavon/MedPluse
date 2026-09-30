@@ -6,57 +6,13 @@ import {
   deleteAppointment,
   updateAppointment
 } from "../../utils/appoinmentStorage";
+import { demoAppointments } from "../../utils/demoData";
 
 import "./Appointments.css";
 
 /* ---------------- DEFAULT DATA ---------------- */
 
-const defaultAppointments = [
-  {
-    id: "APT001",
-    patientName: "Sarah Johnson",
-    patientId: "P001",
-    doctor: "Dr. Mehta",
-    department: "Cardiology",
-    date: new Date().toISOString().split("T")[0],
-    time: "09:30 AM",
-    type: "Consultation",
-    status: "Pending"
-  },
-  {
-    id: "APT002",
-    patientName: "Michael Chen",
-    patientId: "P002",
-    doctor: "Dr. Robert Kim",
-    department: "Cardiology",
-    date: new Date().toISOString().split("T")[0],
-    time: "10:30 AM",
-    status: "In Progress",
-    type: "Follow-up"
-  },
-  {
-    id: "APT003",
-    patientName: "Emily Rodriguez",
-    patientId: "P003",
-    doctor: "Dr. Maria Garcia",
-    department: "Obstetrics",
-    date: new Date().toISOString().split("T")[0],
-    time: "11:00 AM",
-    status: "Scheduled",
-    type: "Routine Checkup"
-  },
-  {
-    id: "APT004",
-    patientName: "James Wilson",
-    patientId: "P004",
-    doctor: "Dr. David Lee",
-    department: "Endocrinology",
-    date: new Date(Date.now() + 86400000).toISOString().split("T")[0],
-    time: "02:00 PM",
-    status: "Scheduled",
-    type: "Consultation"
-  }
-];
+const defaultAppointments = demoAppointments;
 
 /* ---------------- COMPONENT ---------------- */
 

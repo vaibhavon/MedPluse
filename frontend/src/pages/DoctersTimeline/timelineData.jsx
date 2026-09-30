@@ -35,5 +35,13 @@ export const timelineData = [
     title: "Follow-up recommended in 7 days",
     doctor: "Dr. Vikram Patel",
     date: "2026-01-12"
+  },
+  {
+    id: "6",
+    type: "visit",
+    title: "Cardiology Consultation",
+    doctor: "Dr. Abhas Pal",
+    date: "2026-01-05",
+    note: "Routine cardiac screening, ECG normal."
   }
 ];

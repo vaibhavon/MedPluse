@@ -7,15 +7,6 @@ import doc3 from '../assets/docter3.jpg'
 export default function Doctors() {
   const doctors = [
     {
-      id: "abhas-pal",
-      name: "Dr. Abhas Pal",
-      spec: "Cardiologist",
-      exp: "15+ Years Experience",
-      degree: "MD, DM (Cardiology)",
-      availability: "Mon – Sat | 10 AM – 6 PM",
-        img :doc1
-    },
-    {
       id: "vaibhav-girdakar",
       name: "Dr. Vaibhav Giradkar",
       spec: "Neurologist",
@@ -23,6 +14,15 @@ export default function Doctors() {
       degree: "MD, DM (Neurology)",
       availability: "Mon – Fri | 11 AM – 5 PM",
       img :doc2
+    },
+    {
+      id: "abhas-pal",
+      name: "Dr. Abhas Pal",
+      spec: "Cardiologist",
+      exp: "15+ Years Experience",
+      degree: "MD, DM (Cardiology)",
+      availability: "Mon – Sat | 10 AM – 6 PM",
+        img :doc1
     },
     {
       id: "vedant-ankar",

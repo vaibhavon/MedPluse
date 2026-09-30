@@ -32,5 +32,21 @@ export const notificationsData = [
     message: "Time to take Paracetamol 500mg.",
     time: "2 days ago",
     read: true
+  },
+  {
+    id: "5",
+    type: "appointment",
+    title: "Appointment Confirmed",
+    message: "Your consultation with Dr. Vaibhav Giradkar is confirmed for Mar 12 at 11:00 AM.",
+    time: "3 days ago",
+    read: true
+  },
+  {
+    id: "6",
+    type: "report",
+    title: "Lipid Profile Uploaded",
+    message: "Dr. Priya Desai uploaded your Lipid Profile report.",
+    time: "1 week ago",
+    read: true
   }
 ];

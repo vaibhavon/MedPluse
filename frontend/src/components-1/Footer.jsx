@@ -64,15 +64,15 @@ const Footer = () => {
             <ul className="contact-info">
               <li>
                 <MapPin size={18} />
-                <span>123 Medical Center Dr.<br />New York, NY 10001</span>
+                <span>Mumbai, India</span>
               </li>
               <li>
                 <Phone size={18} />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 98765 43210</span>
               </li>
               <li>
                 <Mail size={18} />
-                <span>info@medpulse.com</span>
+                <span>Mediplus@hospital.com</span>
               </li>
             </ul>
           </div>

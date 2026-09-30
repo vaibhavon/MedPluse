@@ -7,30 +7,9 @@ import {
   updateInvoice,
   deleteInvoice
 } from "../../utils/billingStorage";
+import { demoInvoices } from "../../utils/demoData";
 import "./Billing.css";
 
-const demoInvoices = [
-  {
-    id: "INV-2026-001",
-    patientName: "Sarah Johnson",
-    patientId: "P001",
-    date: "2026-01-05",
-    dueDate: "2026-01-20",
-    amount: 1250,
-    status: "Paid",
-    services: ["Cardiac Consultation", "ECG Test"]
-  },
-  {
-    id: "INV-2026-002",
-    patientName: "Michael Chen",
-    patientId: "P002",
-    date: "2026-01-06",
-    dueDate: "2026-01-21",
-    amount: 3450,
-    status: "Pending",
-    services: ["Hospital Stay", "Medications"]
-  }
-];
 
 export default function Billing() {
 

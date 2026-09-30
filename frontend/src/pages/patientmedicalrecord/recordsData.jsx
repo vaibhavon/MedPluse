@@ -36,5 +36,23 @@ export const recordsData = [
     date: "Jan 28, 2026",
     fileType: "pdf",
     fileUrl: "#"
+  },
+  {
+    id: "5",
+    title: "Lipid Profile",
+    type: "Lab Report",
+    doctor: "Dr. Priya Desai",
+    date: "Jan 20, 2026",
+    fileType: "pdf",
+    fileUrl: "#"
+  },
+  {
+    id: "6",
+    title: "MRI Brain Scan",
+    type: "Scan",
+    doctor: "Dr. Vaibhav Giradkar",
+    date: "Jan 12, 2026",
+    fileType: "image",
+    fileUrl: "#"
   }
 ];

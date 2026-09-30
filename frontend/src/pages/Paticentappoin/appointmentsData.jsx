@@ -1,4 +1,5 @@
 // src/appointments/appointmentsData.js
+// Demo data for the patient portal (also reused as the patient's visit history).
 
 export const appointmentsData = [
   {
@@ -28,5 +29,19 @@ export const appointmentsData = [
     doctor: 'Dr. Anjali Sharma',
     reason: 'Follow-up Consultation',
     status: 'Scheduled'
+  },
+  {
+    id: '5',
+    date: 'Mar 12, 2026',
+    doctor: 'Dr. Vaibhav Giradkar',
+    reason: 'Migraine Consultation',
+    status: 'Scheduled'
+  },
+  {
+    id: '6',
+    date: 'Jan 28, 2026',
+    doctor: 'Dr. Abhas Pal',
+    reason: 'Cardiology Screening',
+    status: 'Cancelled'
   }
 ];

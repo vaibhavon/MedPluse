@@ -27,5 +27,32 @@ export const labReportsData = [
     status: "Reviewed",
     abnormal: true,
     remarks: "Cholesterol elevated"
+  },
+  {
+    id: "4",
+    patient: "Neha Kapoor",
+    testName: "Thyroid Profile",
+    date: "2026-02-23",
+    status: "Pending",
+    abnormal: false,
+    remarks: ""
+  },
+  {
+    id: "5",
+    patient: "Suresh Nair",
+    testName: "Liver Function Test",
+    date: "2026-02-19",
+    status: "Reviewed",
+    abnormal: false,
+    remarks: "Within normal range"
+  },
+  {
+    id: "6",
+    patient: "Kavita Joshi",
+    testName: "Urine Routine",
+    date: "2026-02-18",
+    status: "Reviewed",
+    abnormal: true,
+    remarks: "Trace protein, repeat in 2 weeks"
   }
 ];

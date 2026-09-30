@@ -6,6 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./redux/store";
 import App from "./App";
 import "./index.css";
+import { seedDemoData } from "./utils/demoData";
+
+seedDemoData();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

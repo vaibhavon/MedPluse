@@ -105,14 +105,14 @@ export default function MachineryDetail() {
           <h3>Uses</h3>
           <ul>
             {machine.uses.map((u) => (
-              <li key={u}>✔ {u}</li>
+              <li key={u}>{u}</li>
             ))}
           </ul>
 
           <h3>Advantages</h3>
           <ul>
             {machine.advantages.map((a) => (
-              <li key={a}>✔ {a}</li>
+              <li key={a}>{a}</li>
             ))}
           </ul>
         </div>

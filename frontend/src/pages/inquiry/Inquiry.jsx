@@ -8,7 +8,7 @@ import "./Inquiry.css";
 
 export default function Inquiry() {
     const [list, setList] = useState(() => getInquiries());
-    const [filter, setFilter] = useState("");
+    const [filter, setFilter] = useState("All");
 
     const changeStatus = (inq, status) => {
         updateInquiry({ ...inq, status });

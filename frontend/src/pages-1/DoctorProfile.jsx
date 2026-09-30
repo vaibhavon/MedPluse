@@ -111,7 +111,7 @@ export default function DoctorProfile() {
           <h3>Services Offered</h3>
           <ul>
             {doctor.services.map((s) => (
-              <li key={s}>✔ {s}</li>
+              <li key={s}>{s}</li>
             ))}
           </ul>
 

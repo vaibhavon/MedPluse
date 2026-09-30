@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import { login } from "../../redux/authSlice";
 import { switchSystem } from "../../redux/ErpCrmSlice";
 import { addInquiry } from "../../utils/inquiryStorage";
@@ -17,6 +18,7 @@ function Login() {
   // ERP LOGIN STATES
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState("");
   const [role, setRole] = useState("");
   const [showOtpBox, setShowOtpBox] = useState(false);
@@ -61,7 +63,13 @@ function Login() {
         body: JSON.stringify({ email: id, password, role }),
       });
 
-      const data = await res.json();
+      // A non-JSON body means the server (or a proxy in front of it) failed;
+      // show the HTTP status so it is obvious what went wrong.
+      const data = await res.json().catch(() => null);
+      if (!data) {
+        setError(`Server error (${res.status}). Please try again.`);
+        return;
+      }
 
       if (data.otpRequired) {
         setShowOtpBox(true);
@@ -98,7 +106,13 @@ function Login() {
         body: JSON.stringify({ email: id, otp }),
       });
 
-      const data = await res.json();
+      // A non-JSON body means the server (or a proxy in front of it) failed;
+      // show the HTTP status so it is obvious what went wrong.
+      const data = await res.json().catch(() => null);
+      if (!data) {
+        setError(`Server error (${res.status}). Please try again.`);
+        return;
+      }
 
       if (data.success) {
         dispatch(login({ system: "ERP", id, role: data.role, token: data.token }));
@@ -158,20 +172,31 @@ function Login() {
             
             <input
               type="email"
-              placeholder="Your Email ID"
+              placeholder="Enter valid email"
               value={id}
               onChange={(e) => setId(e.target.value)}
               disabled={showOtpBox}
               required
             />
-            <input
-              type="password"
-              placeholder="1234"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={showOtpBox}
-              required
-            />
+            <div className="password-field">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="pass:1234"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={showOtpBox}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
 
             {/* ROLE SELECTOR */}
             {!showOtpBox && (

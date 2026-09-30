@@ -11,8 +11,54 @@ const emptyVitals = {
   date: ""
 };
 
+// Demo patients already being tracked (before / after their treatment)
+const demoPatients = [
+  {
+    id: "t1",
+    name: "Sarah Johnson",
+    treatment: "Hypertension management",
+    before: { date: "2026-01-05", weight: "78", bp: "150/95", sugar: "104", heartRate: "88" },
+    after: { date: "2026-02-05", weight: "75", bp: "132/84", sugar: "98", heartRate: "76" }
+  },
+  {
+    id: "t2",
+    name: "Chris Evan",
+    treatment: "Type 2 diabetes plan",
+    before: { date: "2026-01-10", weight: "92", bp: "138/88", sugar: "210", heartRate: "84" },
+    after: { date: "2026-02-10", weight: "89", bp: "130/84", sugar: "132", heartRate: "78" }
+  },
+  {
+    id: "t3",
+    name: "Robert Downey Jr",
+    treatment: "Physiotherapy for back pain",
+    before: { date: "2026-01-12", weight: "84", bp: "128/82", sugar: "96", heartRate: "80" },
+    after: { date: "2026-02-12", weight: "83", bp: "124/80", sugar: "94", heartRate: "74" }
+  },
+  {
+    id: "t4",
+    name: "Steve Romanoff",
+    treatment: "Inhaled steroid course",
+    before: { date: "2026-01-14", weight: "61", bp: "118/76", sugar: "92", heartRate: "96" },
+    after: { date: "2026-02-14", weight: "62", bp: "116/74", sugar: "90", heartRate: "82" }
+  },
+  {
+    id: "t5",
+    name: "Nick Jossef",
+    treatment: "Arthritis medication",
+    before: { date: "2026-01-08", weight: "76", bp: "140/90", sugar: "110", heartRate: "82" },
+    after: { date: "2026-02-08", weight: "77", bp: "142/92", sugar: "112", heartRate: "84" }
+  },
+  {
+    id: "t6",
+    name: "Emilly Wathson",
+    treatment: "Migraine prophylaxis",
+    before: { date: "2026-01-08", weight: "58", bp: "112/72", sugar: "90", heartRate: "78" },
+    after: { date: "2026-02-08", weight: "58", bp: "110/70", sugar: "88", heartRate: "72" }
+  }
+];
+
 export default function TreatmentEffectiveness() {
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] = useState(demoPatients);
   const [selectedId, setSelectedId] = useState(null);
 
   const [form, setForm] = useState({
