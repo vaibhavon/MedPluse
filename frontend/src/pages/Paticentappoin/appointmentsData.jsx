@@ -45,3 +45,63 @@ export const appointmentsData = [
     status: 'Cancelled'
   }
 ];
+
+// Demo data for the doctor's Appointments page: 8 patients across the three tabs.
+export const doctorAppointmentsData = [
+  {
+    id: 'd1',
+    date: 'Mar 05, 2026',
+    patient: 'Rahul Sharma',
+    reason: 'Gastritis follow-up',
+    status: 'Scheduled'
+  },
+  {
+    id: 'd2',
+    date: 'Mar 06, 2026',
+    patient: 'Priya Verma',
+    reason: 'Iron deficiency review',
+    status: 'Scheduled'
+  },
+  {
+    id: 'd3',
+    date: 'Mar 09, 2026',
+    patient: 'Amit Patel',
+    reason: 'Cholesterol check',
+    status: 'Scheduled'
+  },
+  {
+    id: 'd4',
+    date: 'Feb 20, 2026',
+    patient: 'Sarah Johnson',
+    reason: 'Blood pressure review',
+    status: 'Completed'
+  },
+  {
+    id: 'd5',
+    date: 'Feb 18, 2026',
+    patient: 'Chris Evan',
+    reason: 'Diabetes follow-up',
+    status: 'Completed'
+  },
+  {
+    id: 'd6',
+    date: 'Feb 15, 2026',
+    patient: 'Neha Kapoor',
+    reason: 'Thyroid profile review',
+    status: 'Completed'
+  },
+  {
+    id: 'd7',
+    date: 'Feb 10, 2026',
+    patient: 'Suresh Nair',
+    reason: 'Cardiac consultation',
+    status: 'Completed'
+  },
+  {
+    id: 'd8',
+    date: 'Feb 12, 2026',
+    patient: 'Kavita Joshi',
+    reason: 'Urine test review',
+    status: 'Cancelled'
+  }
+];

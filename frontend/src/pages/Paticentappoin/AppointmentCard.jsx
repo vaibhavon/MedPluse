@@ -5,16 +5,22 @@ import "./appointments.css";
 export default function AppointmentCard({ appointment }) {
   const isUpcoming = appointment.status === "Scheduled";
 
+  // Doctor view lists patients; patient view lists doctors ("Dr. Anjali" -> "A")
+  const name = appointment.patient || appointment.doctor;
+  const initial = appointment.patient
+    ? name[0]
+    : name.split(" ")[1]?.[0] || "D";
+
   return (
     <div className="appointment-card">
       {/* Left */}
       <div className="card-left">
         <div className="avatar">
-          {appointment.doctor.split(" ")[1]?.[0] || "D"}
+          {initial}
         </div>
 
         <div className="card-info">
-          <h3>{appointment.doctor}</h3>
+          <h3>{name}</h3>
           <p className="reason">{appointment.reason}</p>
           <p className="date">📅 {appointment.date}</p>
         </div>

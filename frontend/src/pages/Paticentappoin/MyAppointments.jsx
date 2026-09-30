@@ -1,7 +1,8 @@
 // src/appointments/MyAppointments.jsx
 
 import { useState } from "react";
-import { appointmentsData } from "./appointmentsData";
+import { useSelector } from "react-redux";
+import { appointmentsData, doctorAppointmentsData } from "./appointmentsData";
 import AppointmentCard from "./AppointmentCard";
 import "./appointments.css";
 
@@ -9,8 +10,12 @@ const TABS = ["Upcoming", "Completed", "Cancelled"];
 
 export default function MyAppointments() {
   const [activeTab, setActiveTab] = useState("Upcoming");
+  const role = useSelector((state) => state.auth.role);
+  const isDoctor = role === "doctor";
 
-  const filteredAppointments = appointmentsData.filter((appt) => {
+  const filteredAppointments = (
+    isDoctor ? doctorAppointmentsData : appointmentsData
+  ).filter((appt) => {
     if (activeTab === "Upcoming") return appt.status === "Scheduled";
     if (activeTab === "Completed") return appt.status === "Completed";
     if (activeTab === "Cancelled") return appt.status === "Cancelled";
@@ -21,8 +26,12 @@ export default function MyAppointments() {
     <div className="appointments-page">
       {/* Header */}
       <div className="appointments-header">
-        <h1>My Appointments</h1>
-        <p>Manage your hospital visits</p>
+        <h1>Appointments</h1>
+        <p>
+          {isDoctor
+            ? "Manage your patient appointments"
+            : "Manage your hospital visits"}
+        </p>
       </div>
 
       {/* Tabs */}

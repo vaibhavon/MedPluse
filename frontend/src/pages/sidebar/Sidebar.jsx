@@ -36,7 +36,7 @@ export default function Sidebar({ open = false, onClose = () => {} }) {
 
     doctor: [
       { to: "/dashboard/doctorTaskPanel", label: "Doctor Tasks" },
-      { to: "/dashboard/MyAppointments", label: "My Appointments" },
+      { to: "/dashboard/MyAppointments", label: "Appointments" },
       { to: "/dashboard/MyPrescriptions", label: "Prescriptions" },
       { to: "/dashboard/sOAPNotesPage", label: "SOAP Notes" },
       { to: "/dashboard/labReviewQueue", label: "Lab Review" },
@@ -46,7 +46,7 @@ export default function Sidebar({ open = false, onClose = () => {} }) {
 
     patient: [
       { to: "/dashboard/Paticentprofile", label: "Patient Profile" },
-      { to: "/dashboard/MyAppointments", label: "My Appointments" },
+      { to: "/dashboard/MyAppointments", label: "Appointments" },
       { to: "/dashboard/MyMedicalRecords", label: "Medical Records" },
       { to: "/dashboard/MyPrescriptions", label: "Prescriptions" },
       { to: "/dashboard/HealthSummaryCard", label: "Health Summary" },
