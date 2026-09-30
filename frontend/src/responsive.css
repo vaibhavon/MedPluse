@@ -724,8 +724,9 @@ textarea {
 
 /* ===== Home hero on phones =====
    Compact so the whole hero fits on one phone screen: smaller type, image height
-   tied to the viewport height, the two rating cards side by side under the image, and the
-   Book Appointment / Emergency Call buttons side by side at the bottom.
+   capped by the viewport height, the two rating cards floating over the image like
+   on desktop, and the Book Appointment / Emergency Call buttons side by side at
+   the bottom.
    `display: contents` on .hero-content lets the buttons be re-ordered below the
    image without touching Hero.jsx. */
 @media (max-width: 640px) {
@@ -762,32 +763,40 @@ textarea {
     line-height: 1.45;
   }
 
+  /* Same look as desktop: the image keeps its morphing rounded corners and the
+     two rating cards float over its top-right and bottom-left corners. */
   .hero-imgbox {
     order: 1;
     margin-top: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
   }
 
   .hero-img {
-    grid-column: 1 / -1;
-    height: clamp(130px, 30vh, 300px);
-    height: clamp(130px, 30svh, 300px);
+    height: auto;
+    max-height: 44vh;
+    max-height: 44svh;
     object-fit: cover;
-    border-radius: 20px;
   }
 
   .floating-card {
-    position: static;
+    position: absolute;
     margin: 0;
-    padding: 8px 10px;
-    border-radius: 12px;
-    text-align: center;
+    padding: 10px 14px;
+    border-radius: 14px;
+    text-align: left;
+  }
+
+  .floating-card.top-right {
+    top: 14px;
+    right: -6px;
+  }
+
+  .floating-card.bottom-left {
+    bottom: 26px;
+    left: -6px;
   }
 
   .floating-card span {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .floating-card p {
@@ -835,11 +844,12 @@ textarea {
   }
 
   .hero-img {
-    height: clamp(110px, 24svh, 300px);
+    max-height: 34vh;
+    max-height: 34svh;
   }
 
   .floating-card {
-    padding: 6px 8px;
+    padding: 7px 10px;
   }
 }
 
