@@ -42,14 +42,30 @@ const allowedOrigins = [
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+// In development the Vite dev server is reached through localhost, 127.0.0.1 or a
+// LAN address (testing on a phone), on whatever port Vite picked. Allow those so
+// CORS does not turn a healthy backend into a "Server error" on the login page.
+const localOriginPattern =
+  /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\]|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/;
+
+function isAllowedOrigin(origin) {
+  if (!origin || allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  return !isProduction && localOriginPattern.test(origin);
+}
+
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error(`CORS blocked for origin: ${origin}`));
+      const err = new Error(`CORS blocked for origin: ${origin}`);
+      err.isCorsError = true;
+      return callback(err);
     },
     credentials: true
   })
@@ -160,10 +176,39 @@ async function sendOtpEmail(to, otp, account) {
   });
 }
 
+// In development, if no MongoDB is running at MONGODB_URI/MONGO_URI, fall back to
+// an in-memory MongoDB (mongodb-memory-server, a devDependency) so the API and its
+// seeded demo data work with zero setup. Data resets on restart. Disable with
+// MEMORY_DB_FALLBACK=false. Never used in production.
+let memoryServer = null;
+
+async function connectToMongo() {
+  const fallbackEnabled =
+    !isProduction && process.env.MEMORY_DB_FALLBACK !== "false";
+
+  try {
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: fallbackEnabled ? 4000 : 30000
+    });
+    console.log("MongoDB connected successfully");
+  } catch (err) {
+    if (!fallbackEnabled) {
+      throw err;
+    }
+
+    console.log(`MongoDB is not reachable (${err.message}).`);
+    console.log("Starting an in-memory MongoDB for development (data resets on restart)...");
+
+    const { MongoMemoryServer } = require("mongodb-memory-server");
+    memoryServer = await MongoMemoryServer.create();
+    await mongoose.connect(memoryServer.getUri());
+    console.log("Connected to in-memory MongoDB");
+  }
+}
+
 async function connectAndSeed() {
   try {
-    await mongoose.connect(mongoUri);
-    console.log("MongoDB connected successfully");
+    await connectToMongo();
     await seedPatients();
     await seedDoctors();
   } catch (err) {
@@ -336,6 +381,16 @@ app.use(
   requireWriteRole(["admin", "receptionist"]),
   require("./routes/paitentRoutes")
 );
+
+// A blocked origin is a client error, not a crash: answer with JSON (the login
+// page parses JSON) instead of Express's default 500 HTML page.
+app.use((err, req, res, next) => {
+  if (err && err.isCorsError) {
+    return res.status(403).json({ success: false, message: err.message });
+  }
+
+  return next(err);
+});
 
 // Only connect to Mongo and start listening when run directly (`node server.js`).
 // When imported (e.g. by tests) the app is exported without side effects so the

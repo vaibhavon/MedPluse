@@ -33,6 +33,39 @@ const defaultDoctors = [
     availability: "Tue-Sat 9AM-3PM",
     experience: 12,
     status: "Active"
+  },
+  {
+    doctorId: "D004",
+    name: "Dr. Priya Desai",
+    specialization: "Pediatrician",
+    phone: "+1 (555) 666-7777",
+    email: "priya.desai@hospital.com",
+    department: "Pediatrics",
+    availability: "Mon-Fri 9AM-2PM",
+    experience: 9,
+    status: "Active"
+  },
+  {
+    doctorId: "D005",
+    name: "Dr. Vikram Patel",
+    specialization: "General Physician",
+    phone: "+1 (555) 777-8888",
+    email: "vikram.patel@hospital.com",
+    department: "General Medicine",
+    availability: "Mon-Sat 8AM-1PM",
+    experience: 14,
+    status: "Active"
+  },
+  {
+    doctorId: "D006",
+    name: "Dr. Anjali Sharma",
+    specialization: "Dermatologist",
+    phone: "+1 (555) 888-9999",
+    email: "anjali.sharma@hospital.com",
+    department: "Dermatology",
+    availability: "Tue-Sat 10AM-4PM",
+    experience: 7,
+    status: "On Leave"
   }
 ];
 

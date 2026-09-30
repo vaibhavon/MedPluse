@@ -158,3 +158,25 @@ describe("protected routes", () => {
     expect(created.status).toBe(201);
   });
 });
+
+describe("CORS", () => {
+  const badLogin = { email: "user@example.com", password: "wrong", role: "admin" };
+
+  test.each([
+    "http://localhost:5173",
+    "http://127.0.0.1:5174",
+    "http://192.168.1.20:5173"
+  ])("dev origin %s is allowed (request reaches the login handler)", async (origin) => {
+    const res = await request(app).post("/api/login").set("Origin", origin).send(badLogin);
+    expect(res.status).toBe(401);
+  });
+
+  test("an unknown origin gets a JSON 403, not a 500 HTML page", async () => {
+    const res = await request(app)
+      .post("/api/login")
+      .set("Origin", "https://evil.example.com")
+      .send(badLogin);
+    expect(res.status).toBe(403);
+    expect(res.body.success).toBe(false);
+  });
+});
