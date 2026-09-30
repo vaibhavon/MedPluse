@@ -16,7 +16,7 @@
 
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
   gap: 30px;
 }
 
@@ -28,24 +28,9 @@
   position: relative;
   transition: all 0.3s ease;
   border: 1px solid #f0f7ff;
-  animation: fadeUp 1s ease-in-out forwards;
-  animation-timeline: view();
-  scroll-behavior: smooth;
-  animation-range: entry 0% cover 70%;
 }
 
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20rem);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-
-}
+/* Scroll-reveal for this card lives in reveal.css */
 
 .testimonial-card:hover {
   transform: translateY(-10px);
@@ -77,8 +62,8 @@
   font-size: 1.1rem;
 }
 
-/* Patient Profile Section */
-.patient-info {
+/* Patient Profile Section (scoped: the patient-profile header reuses .patient-info) */
+.testimonial-card .patient-info {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -94,14 +79,47 @@
   border: 2px solid #2a9df4;
 }
 
-.patient-info strong {
+.testimonial-card .patient-info strong {
   display: block;
   color: #1f2937;
   font-size: 1.1rem;
 }
 
-.patient-info span {
+.testimonial-card .patient-info span {
   color: #2a9df4;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .testimonials {
+    padding: 56px 0;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .testimonial-grid {
+    gap: 22px;
+  }
+
+  .testimonial-card {
+    padding: 28px 22px;
+    border-radius: 20px;
+  }
+
+  .testimonial-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .quote-icon {
+    top: 22px;
+    right: 22px;
+  }
 }

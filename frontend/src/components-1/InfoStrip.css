@@ -10,7 +10,8 @@
   gap: 24px;
 }
 
-.info-card {
+/* Scoped to .info-strip: the patient-profile cards reuse the .info-card name */
+.info-strip .info-card {
   background: white;
   padding: 24px;
   border-radius: 18px;
@@ -18,7 +19,7 @@
   transition: transform .2s ease;
 }
 
-.info-card:hover {
+.info-strip .info-card:hover {
   transform: translateY(-6px);
 }
 /* In InfoStrip.css */
@@ -33,9 +34,18 @@
   margin-bottom: 15px;
 }
 
-.info-card {
+.info-strip .info-card {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers the content of the card */
   text-align: center;
+}
+
+/* Responsive: 4 → 2 columns, so the cards never spill off narrow screens.
+   (The phone layout, max-width 640px, lives in responsive.css.) */
+@media (max-width: 900px) {
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
 }

@@ -4,7 +4,9 @@
   margin-bottom: 16px;
 }
 
-.machinery-page p {
+/* Direct child only: a bare `.machinery-page p` also hit the description inside
+   every machine card and gave it a 40px bottom margin. */
+.machinery-page > .container > p {
   color: #6b7280;
   margin-bottom: 40px;
 }
@@ -12,5 +14,20 @@
 .machinery-page{
 background-color: white;
 padding: 80px 0;
-height: 80vh;
+/* min-height, not height: a fixed 80vh let the cards spill over the footer */
+min-height: 80vh;
+}
+
+@media (max-width: 640px) {
+  .machinery-page {
+    padding: 48px 0;
+  }
+
+  .machinery-page h1 {
+    font-size: 34px;
+  }
+
+  .machinery-page > .container > p {
+    margin-bottom: 28px;
+  }
 }

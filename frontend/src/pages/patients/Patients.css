@@ -82,6 +82,12 @@
   font-weight: bold;
 }
 
+/* Doctors.css also styles .avatar (font-size: 28px), which overflows the circle
+   for three-letter initials */
+.patient-card .avatar {
+  font-size: 18px;
+}
+
 .patient-info {
   flex: 1;
 }

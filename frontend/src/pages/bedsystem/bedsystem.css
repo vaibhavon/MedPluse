@@ -515,3 +515,22 @@ body {
   border: 1px solid var(--border);
   background: var(--bg-app);
 }
+
+/* Patient line on a bed card (name, gender, doctor in a row under a divider).
+   These styles used to leak in from the testimonials stylesheet, which shares
+   the .patient-info class name; that also broke the patient list, so the
+   testimonial rules are now scoped and the bed card spells its own out. */
+.bed-card .patient-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 15px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.bed-card .patient-info span {
+  color: #2a9df4;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

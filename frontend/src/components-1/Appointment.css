@@ -6,15 +6,6 @@
   height: auto;
 }
 
-.appointment-card {
-  max-width: 800px;
-  margin: 0 auto;
-  background: #ffffff;
-  padding: 50px;
-  border-radius: 30px;
-  box-shadow: 0 20px 50px rgba(42, 157, 244, 0.1);
-}
-
 .appointment-header {
   text-align: center;
   margin-bottom: 40px;
@@ -38,23 +29,16 @@
   padding: 50px;
   border-radius: 30px;
   box-shadow: 0 20px 50px rgba(42, 157, 244, 0.1);
-  animation: fadeUp 1s ease-in-out forwards;
-  animation-timeline: view();
-  scroll-behavior: smooth;
-  animation-range: entry 0% cover 100%;
 }
 
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: scale(0%);
-  }
+/* Scroll-reveal for .container-appoinment lives in reveal.css */
 
-  50% {
-    opacity: 1;
-    transform: scale(100%);
+/* The form card has no wrapper gutter, so give it side margin once it is
+   narrower than its 800px max-width (it used to touch both screen edges). */
+@media (max-width: 832px) {
+  .container-appoinment {
+    margin-inline: 16px;
   }
-
 }
 
 
@@ -63,6 +47,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+}
+
+/* Let grid children shrink so the native date picker can't force overflow */
+.appointment-form input,
+.appointment-form select {
+  width: 100%;
+  min-width: 0;
 }
 
 .input-group {
@@ -128,9 +119,5 @@ select:focus {
 
   .submit-btn {
     grid-column: span 1;
-  }
-
-  .appointment-card {
-    padding: 30px 20px;
   }
 }

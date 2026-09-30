@@ -160,19 +160,24 @@
     top: 0;
     left: 0;
     height: 100vh;
+    height: 100dvh;
     width: min(84vw, 300px);
     flex-basis: auto;
     min-height: 100vh;
+    min-height: 100dvh;
     z-index: 11000;
     transform: translateX(-100%);
-    transition: transform 0.28s ease;
-    box-shadow: 0 0 40px rgba(15, 23, 42, 0.18);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    /* No shadow while the drawer is parked off-canvas: it used to bleed a grey
+       strip into the left edge of every dashboard page. */
+    box-shadow: none;
     border-right: 1px solid #e5e7eb;
     overflow-y: auto;
   }
 
   .sidebar.sidebar-open {
     transform: translateX(0);
+    box-shadow: 0 0 40px rgba(15, 23, 42, 0.18);
   }
 
   .sidebar-close {

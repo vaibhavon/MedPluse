@@ -7,3 +7,10 @@
 .services-page {
   background: #f9fbfd;
 }
+
+@media (max-width: 640px) {
+  .services-page h1 {
+    font-size: 34px;
+    padding-top: 24px;
+  }
+}

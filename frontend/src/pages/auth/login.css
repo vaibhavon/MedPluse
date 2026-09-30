@@ -204,6 +204,39 @@ form span {
 .toggle-right { right: 0; transform: translateX(0); }
 .container-login.active .toggle-right { transform: translateX(200%); }
 
+/* Show/hide password toggle */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.container-login .password-field input {
+    padding-right: 46px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: #2a9df4;
+    background: rgba(42, 157, 244, 0.08);
+}
+
 /* OTP STYLES */
 .otp-container {
     width: 100%;
@@ -299,110 +332,117 @@ form span {
     }
 }
 
+/* Phones: the same sliding animation as desktop, rotated 90 degrees. The forms
+   share the top area and the blue panel sits under them; pressing the panel's
+   button slides the panel up over the top while the other form slides down into
+   the space it leaves, and the panel's edge curves like a wave as it moves.
+   --form-h is the height of the form area, --panel-h the height of the panel. */
 @media (max-width: 720px) {
     .login-page {
-        align-items: flex-start;
-        overflow-y: auto;
-        padding: 24px 12px;
+        align-items: center;
+        padding: 20px 12px;
+        min-height: calc(100vh - 64px);
+        min-height: calc(100svh - 64px);
     }
 
     .container-login {
-        border-radius: 18px;
-        min-height: auto;
-        overflow: visible;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-container {
-        position: relative;
+        --form-h: 470px;
+        --panel-h: 200px;
         width: 100%;
-        height: auto;
-        min-height: auto;
-        transition: none;
-    }
-
-    .sign-in,
-    .sign-up {
-        left: auto;
-        width: 100%;
-        opacity: 1;
-        transform: none;
-        z-index: auto;
-    }
-
-    .sign-up {
-        display: none;
-    }
-
-    .container-login.active .sign-in {
-        display: none;
-        transform: none;
-    }
-
-    .container-login.active .sign-up {
-        display: block;
-        transform: none;
-        animation: none;
+        max-width: 440px;
+        height: calc(var(--form-h) + var(--panel-h));
+        min-height: 0;
+        border-radius: 22px;
     }
 
     .container-login form {
-        min-height: 420px;
-        padding: 34px 22px;
+        padding: 0 22px;
     }
 
     form h1 {
         font-size: 1.8rem;
     }
 
-    .toggle-container,
-    .container-login.active .toggle-container {
-        position: relative;
-        inset: auto;
+    /* Forms: fill the top area, slide down by the panel's height when active */
+    .form-container {
+        left: 0;
         width: 100%;
-        height: auto;
-        transform: none;
-        border-radius: 0 0 18px 18px;
-        overflow: visible;
-        order: 2;
+        height: var(--form-h);
+        overflow-y: auto;
     }
 
-    .toggle,
-    .container-login.active .toggle {
-        left: auto;
+    .sign-in,
+    .sign-up {
         width: 100%;
-        min-height: 170px;
+    }
+
+    .container-login.active .sign-in,
+    .container-login.active .sign-up {
+        transform: translateY(var(--panel-h));
+    }
+
+    /* Panel: bottom by default (top edge curved), slides to the top when active
+       (bottom edge curved) */
+    .toggle-container {
+        top: var(--form-h);
+        left: 0;
+        width: 100%;
+        height: var(--panel-h);
+        border-radius: 50% 50% 0 0 / 46px 46px 0 0;
+    }
+
+    .container-login.active .toggle-container {
+        transform: translateY(calc(-1 * var(--form-h)));
+        border-radius: 0 0 50% 50% / 0 0 46px 46px;
+    }
+
+    .toggle {
+        left: 0;
+        top: -100%;
+        width: 100%;
+        height: 200%;
         transform: none;
-        border-radius: 0 0 18px 18px;
+    }
+
+    .container-login.active .toggle {
+        transform: translateY(50%);
     }
 
     .toggle-panel {
-        position: relative;
         width: 100%;
-        height: auto;
-        min-height: 170px;
-        transform: none;
-        padding: 24px 20px;
-        gap: 14px;
+        height: 50%;
+        padding: 0 20px;
+        gap: 12px;
     }
 
-    .toggle-left,
-    .toggle-right,
-    .container-login.active .toggle-left,
-    .container-login.active .toggle-right {
-        transform: none;
-        right: auto;
+    .toggle-panel h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .toggle-panel p {
+        font-size: 0.9rem;
     }
 
     .toggle-left {
-        display: none;
+        top: 0;
+        padding-bottom: 22px;
+        transform: translateY(-200%);
     }
 
     .container-login.active .toggle-left {
-        display: flex;
+        transform: translateY(0);
+    }
+
+    .toggle-right {
+        top: auto;
+        right: auto;
+        bottom: 0;
+        padding-top: 22px;
+        transform: translateY(0);
     }
 
     .container-login.active .toggle-right {
-        display: none;
+        transform: translateY(200%);
     }
 }

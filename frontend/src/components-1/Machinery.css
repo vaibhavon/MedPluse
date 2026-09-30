@@ -23,7 +23,7 @@
 .machine-grid {
   display: grid;
   /* repeat(auto-fit) is better than repeat(4) because it works on mobile */
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 24px;
 }
 
@@ -42,6 +42,17 @@
 .machine-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* The dashboard's MachineCard/MachineList stylesheets reuse the .machine-card
+   class name (padding, side border, 350px cap). Scope the marketing card so
+   it stays a full-bleed image card that fills its grid column. */
+.machinery-section .machine-card {
+  padding: 0;
+  gap: 0;
+  max-width: none;
+  border: none;
+  border-radius: 18px;
 }
 
 /* Image Container & Effects */
@@ -104,21 +115,18 @@
 .machine-link {
   text-decoration: none;
   color: inherit;
-  animation: fadeUp 1s ease-in-out forwards;
-  animation-timeline: view();
-  scroll-behavior: smooth;
-  animation-range: entry 0% cover 80%;
 }
 
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20rem);
+/* Scroll-reveal for .machine-link lives in reveal.css */
+
+/* On mobile the heading scales down and the card text gets tighter padding */
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 28px;
   }
 
-  50% {
-    opacity: 1;
-    transform: translateY(0px);
+  .machine-info {
+    padding: 20px;
   }
-
 }

@@ -1,0 +1,36 @@
+/* Scroll-reveal ("before" -> "after") for the marketing-site cards.
+
+   src/hooks/useScrollReveal.js adds `.reveal` + a variant to each card and
+   `.reveal-in` once it scrolls into view, then removes all of them again so the
+   card's own styles (hover lift, transitions) apply as normal afterwards.
+
+   The classes are only present while a card is waiting to be revealed, so
+   nothing can stay hidden if the script doesn't run. */
+
+.reveal {
+  opacity: 0;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* "before" */
+.reveal.reveal-up {
+  transform: translateY(48px);
+}
+
+.reveal.reveal-scale {
+  transform: scale(0.92);
+}
+
+/* "after" (declared last so it wins over the variants above) */
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media print {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

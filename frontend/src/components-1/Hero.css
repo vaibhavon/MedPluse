@@ -156,11 +156,27 @@
     justify-content: center;
   }
 
+  /* The paragraph is capped at 500px; centre the box, not just its text */
+  .hero p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .hero h1 {
     font-size: 2.5rem;
   }
 
   .hero-imgbox {
     margin-top: 50px;
+  }
+
+  /* Keep the floating cards inside the viewport instead of hanging off the
+     edge of the (overflow: hidden) hero. */
+  .top-right {
+    right: 10px;
+  }
+
+  .bottom-left {
+    left: 10px;
   }
 }

@@ -6,11 +6,31 @@
 
 }
 
-.doctors-page p {
+/* Direct child only: a bare `.doctors-page p` also hit every paragraph inside
+   the doctor cards and gave each line a 40px bottom margin. */
+.doctors-page > .container > p {
   color: #6b7280;
   margin-bottom: 40px;
 }
 
 .doctors-page{
   padding: 80px 0;
+}
+
+/* The -50px right margin makes the heading box wider than the page once the
+   page gutter gets narrower than that (below ~1260px), so drop it there */
+@media (max-width: 1260px) {
+  .doctors-page h1 {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .doctors-page {
+    padding: 48px 0;
+  }
+
+  .doctors-page h1 {
+    font-size: 34px;
+  }
 }

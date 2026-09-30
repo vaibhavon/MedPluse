@@ -45,7 +45,9 @@ import DoctorVisitTimeline from "./pages/DoctersTimeline/DoctorVisitTimeline";
 import SOAPNotesPage from "./pages/soapNotes/SOAPNotesPage";
 import DoctorTaskPanel from "./pages/doctorTasks/DoctorTaskPanel";
 import TreatmentEffectiveness from "./pages/treatmentTracker/TreatmentEffectiveness";
+import { useScrollReveal } from "./hooks/useScrollReveal";
 import "./responsive.css";
+import "./reveal.css";
 
 
 
@@ -57,6 +59,9 @@ function App() {
   // The dashboard/ERP shell has its own header + sidebar, so the public
   // marketing navbar and footer are hidden there.
   const hideChrome = pathname.startsWith("/dashboard");
+
+  // Fades/slides the marketing-site cards in as they scroll into view
+  useScrollReveal(pathname);
 
   return (
     <>

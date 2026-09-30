@@ -31,28 +31,7 @@ textarea {
 
 .dashboard,
 .appointments,
-.patients,
-.staff-page,
-.billing-page,
-.blood-page,
-.donors-page,
-.inquiry-page,
-.medicine-stock,
-.machine-list,
-.lab-page,
-.chatbot-page,
-.beds-page,
-.patient-profile-page,
-.medical-records-page,
-.prescriptions-page,
-.notifications-page,
-.health-summary-page,
-.vitals-page,
-.soap-page,
-.doctor-task-page,
-.timeline-page,
-.lab-review-page,
-.treatment-page {
+.patients {
   width: 100%;
   min-width: 0;
 }
@@ -77,8 +56,6 @@ textarea {
   overflow: hidden;
 }
 
-.table-wrap,
-.billing-table,
 .lab-table,
 .records-list,
 .appointments-list,
@@ -100,39 +77,21 @@ textarea {
 
   .hero-grid,
   .about-wrapper,
-  .contact-wrapper,
-  .service-detail,
-  .machinery-detail,
-  .doctor-profile,
-  .health-summary-grid,
-  .patient-profile-grid,
-  .machine-layout,
-  .bed-layout {
+  .contact-wrapper {
     grid-template-columns: 1fr !important;
   }
 
   .stats-grid,
   .services-grid,
-  .doctors-grid,
-  .machines-grid,
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .doctor-task-stats,
-  .vitals-summary,
-  .vitals-grid,
-  .treatment-grid,
-  .lab-review-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   .appointments-header,
   .patients-header,
   .staff-header,
   .billing-header,
-  .blood-header,
-  .machine-toolbar {
+  .blood-header {
     align-items: flex-start;
     gap: 14px;
     flex-wrap: wrap;
@@ -140,9 +99,7 @@ textarea {
 
   .patients-search,
   .staff-search,
-  .blood-search,
-  .medicine-search,
-  .machine-search {
+  .blood-search {
     width: 100%;
     max-width: 100%;
   }
@@ -153,6 +110,14 @@ textarea {
   .container-head,
   .footer-container {
     width: min(100% - 24px, 1200px);
+  }
+
+  /* /services, /doctors and /machinery nest a section (with its own
+     .container) inside another .container. That double-insets the content and
+     squeezed the cards to about two thirds of the screen on phones. */
+  .container .container {
+    width: 100%;
+    padding-inline: 0;
   }
 
   .dashboard,
@@ -213,9 +178,7 @@ textarea {
 
   .form-grid,
   .appointment-form,
-  .staff-form,
-  .medicine-form,
-  .add-medicine-grid {
+  .staff-form {
     grid-template-columns: 1fr !important;
   }
 
@@ -270,14 +233,7 @@ textarea {
 
   .stats-grid,
   .services-grid,
-  .doctors-grid,
-  .machines-grid,
-  .footer-grid,
-  .doctor-task-stats,
-  .vitals-summary,
-  .vitals-grid,
-  .treatment-grid,
-  .lab-review-row {
+  .footer-grid {
     grid-template-columns: 1fr !important;
   }
 
@@ -292,6 +248,10 @@ textarea {
   .appointment-people,
   .patient-card {
     flex-direction: column;
+  }
+
+  .appointment-left {
+    align-items: flex-start;
   }
 
   .time-circle,
@@ -311,6 +271,13 @@ textarea {
 }
 
 /* ===== Wide data tables scroll horizontally instead of breaking layout ===== */
+
+/* The 7-column lab table is wider than the content area between ~1025px and
+   ~1130px (sidebar visible), where the table rules below don't apply yet */
+.lab-container {
+  overflow-x: auto;
+}
+
 @media (max-width: 1024px) {
   .medicine-table,
   .lab-table {
@@ -325,5 +292,686 @@ textarea {
   .lab-table th,
   .lab-table td {
     white-space: nowrap;
+  }
+}
+
+/* ===== Dashboard pages =====
+   These use the real class names of each page. (Several selectors in the first
+   version of this file matched nothing, so those pages were never covered.) */
+
+/* Standalone cards that were rendered flush against the screen edges */
+.health-card,
+.task-panel {
+  margin: 24px;
+}
+
+/* Patient profile: 80px side padding and two fixed columns don't fit a phone */
+@media (max-width: 1024px) {
+  .app-content {
+    padding: 24px 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-content {
+    padding: 16px 12px;
+  }
+
+  .two-column-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .patient-header {
+    flex-wrap: wrap;
+  }
+
+  .info-row {
+    gap: 12px;
+  }
+
+  .info-value {
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .visit-history-card {
+    padding: 18px 16px;
+  }
+
+  /* keep each visit on one line; the table scrolls sideways inside its card */
+  .visit-history-table th,
+  .visit-history-table td {
+    white-space: nowrap;
+  }
+}
+
+/* Vitals form: six inputs were forced into one row, which overflowed on
+   anything narrower than a wide desktop. Let it wrap by available width. */
+.vitals-form {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.vitals-form input,
+.vitals-form button {
+  min-width: 0;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .vitals-form button {
+    grid-column: 1 / -1;
+  }
+
+  .vital-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 12px;
+  }
+}
+
+/* Row cards: details on top, actions underneath, instead of the actions
+   running off the right edge of the card */
+@media (max-width: 640px) {
+  .appointment-card,
+  .record-card,
+  .prescription-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .card-left,
+  .record-left,
+  .prescription-left {
+    min-width: 0;
+  }
+
+  .card-right,
+  .record-actions,
+  .prescription-right {
+    flex-wrap: wrap;
+  }
+
+  .records-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Doctors.css gives .avatar `margin: auto`, which drifts the avatar away
+     from the left edge once these cards stack vertically */
+  .patient-card .avatar,
+  .card-left .avatar {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .health-card,
+  .task-panel {
+    margin: 14px;
+  }
+
+  .health-card {
+    padding: 18px;
+  }
+
+  .health-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .task-time {
+    white-space: nowrap;
+  }
+
+  /* Lab review row: patient + test on the first line, then date | status | button */
+  .lab-row {
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px 12px;
+  }
+
+  .lab-row > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .timeline-top {
+    flex-wrap: wrap;
+    gap: 2px 12px;
+  }
+
+  .timeline-top .date {
+    white-space: nowrap;
+  }
+}
+
+/* Billing */
+@media (max-width: 640px) {
+  .billing,
+  .create-invoice {
+    padding: 18px 14px;
+  }
+
+  .billing-header h2 {
+    font-size: 26px;
+  }
+
+  .billing-search {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .billing-filters {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .invoice-card {
+    padding: 18px;
+  }
+
+  .invoice-left h3 {
+    flex-wrap: wrap;
+  }
+
+  .invoice-right h2 {
+    font-size: 28px;
+  }
+
+  .invoice-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* Bed & ward management: the "add patient" row overflowed its panel */
+@media (max-width: 600px) {
+  .bedsystem-container {
+    padding: 1rem;
+  }
+
+  .form-row {
+    flex-wrap: wrap;
+  }
+
+  .form-row input,
+  .form-row select {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+/* ===== Mobile polish pass ===== */
+
+/* Public pages: .container already gets 12px side margins from its `width`, so
+   the extra 20px of padding from Services.css/Machinery.css pushed cards ~32px
+   in from the screen edge (cards used only ~73% of a 390px screen). */
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 4px;
+  }
+
+  .contact {
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact {
+    padding-block: 48px;
+  }
+
+  .contact h1 {
+    font-size: 34px;
+  }
+
+  .contact-form {
+    max-width: 100%;
+  }
+}
+
+/* Dashboard page titles were flush against the card below them (a global
+   `* { margin: 0 }` from login.css strips the default heading margin), and the
+   h1s were desktop-sized. */
+@media (max-width: 768px) {
+  .soap-page,
+  .treat-page,
+  .lab-container,
+  .staff {
+    padding: 18px 14px;
+  }
+
+  .soap-page > h1,
+  .lab-container > h2,
+  .treat-page > h2,
+  .bedsystem-container > h2,
+  .staff > h2 {
+    font-size: 26px;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+}
+
+/* Segmented filters/tabs: scroll inside their own box instead of running off
+   the right edge on narrow phones */
+@media (max-width: 640px) {
+  .tabs,
+  .staff-filters,
+  .inquiry-filters {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .tab-btn,
+  .staff-filters button,
+  .inquiry-filters button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .tab-btn {
+    padding: 8px 12px;
+  }
+}
+
+/* Staff cards: avatar | name+details, with the status and delete underneath,
+   instead of avatar, name, details, status and a Delete button all squeezed
+   into one row */
+@media (max-width: 640px) {
+  .staff-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .staff-card-content {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 6px 14px;
+    align-items: start;
+  }
+
+  .staff-profile {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .staff-info {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .staff-info h3 {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    font-size: 18px;
+  }
+
+  .staff-info p {
+    overflow-wrap: anywhere;
+  }
+
+  .staff-card-content > .status {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .staff-card .delete-btn {
+    width: 100%;
+    padding: 10px 12px;
+  }
+}
+
+/* Lab tests: the search box, two text inputs and the date input all had
+   different widths. Stack them full-width. */
+@media (max-width: 640px) {
+  .lab-form {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .lab-form input,
+  .lab-container .search-box {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .lab-container .search-box {
+    margin-bottom: 4px;
+  }
+}
+
+/* Treatment tracker: the Reset button was unstyled, the buttons touched the
+   table, and the patient picker sat under the title as a tiny pill */
+@media (max-width: 768px) {
+  .patient-select {
+    margin-bottom: 14px;
+  }
+
+  .patient-select select {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .treat-page .actions {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .treat-page .actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .treat-page .btn-reset {
+    background: #e5e7eb;
+    color: #374151;
+  }
+}
+
+/* Bed system: the bed id ran straight into its status dropdown, and the ward
+   tabs could not wrap on very narrow phones */
+@media (max-width: 600px) {
+  .bed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .bed-id {
+    font-weight: 700;
+  }
+
+  .ward-tabs {
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .ward-tabs button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Doctor tasks: task text and its time stamp touched each other */
+@media (max-width: 640px) {
+  .task-item {
+    gap: 10px;
+  }
+
+  .task-text {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* ===== Home hero on phones =====
+   Compact so the whole hero fits on one phone screen: smaller type, image height
+   tied to the viewport height, the two rating cards side by side under the image, and the
+   Book Appointment / Emergency Call buttons side by side at the bottom.
+   `display: contents` on .hero-content lets the buttons be re-ordered below the
+   image without touching Hero.jsx. */
+@media (max-width: 640px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+  }
+
+  .hero-grid {
+    gap: 14px;
+  }
+
+  .hero-content {
+    display: contents;
+  }
+
+  .hero-tag {
+    justify-self: center;
+    margin-bottom: 0;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 1.15;
+  }
+
+  .hero p {
+    margin: 0 auto;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .hero-imgbox {
+    order: 1;
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .hero-img {
+    grid-column: 1 / -1;
+    height: clamp(130px, 30vh, 300px);
+    height: clamp(130px, 30svh, 300px);
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  .floating-card {
+    position: static;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .floating-card span {
+    font-size: 1rem;
+  }
+
+  .floating-card p {
+    font-size: 11px;
+  }
+
+  .hero-btns {
+    order: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .hero-btns .primary-btn,
+  .hero-btns .outline-btn {
+    width: 100%;
+    height: 46px;
+    padding: 0 8px;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 1.15;
+    text-align: center;
+  }
+}
+
+/* Short phones (e.g. 320x568, 360x640): trim the hero further so it still
+   fits one screen */
+@media (max-width: 640px) and (max-height: 700px) {
+  .hero {
+    padding: 10px 0;
+  }
+
+  .hero-grid {
+    gap: 10px;
+  }
+
+  .hero h1 {
+    font-size: 1.55rem;
+  }
+
+  .hero p {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .hero-img {
+    height: clamp(110px, 24svh, 300px);
+  }
+
+  .floating-card {
+    padding: 6px 8px;
+  }
+}
+
+/* ===== Info strip + Our Services on phones =====
+   Icon + name only (no descriptions). The info strip is one row of 4, the
+   services are 3 x 2, and a whole service card is the tap target that opens
+   its Learn More page (the .read-more link is stretched over the card). */
+@media (max-width: 640px) {
+  .info-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .info-strip .info-card {
+    padding: 12px 4px;
+    border-radius: 14px;
+  }
+
+  .info-strip .info-card:hover {
+    transform: none;
+  }
+
+  .info-strip .logo-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .info-strip .info-card h3 {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .info-strip .info-card p {
+    display: none;
+  }
+
+  .services-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .services-grid {
+    /* !important: an earlier phone rule forces .services-grid to 1 column */
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px;
+    margin-top: 0;
+  }
+
+  .service-card {
+    align-items: center;
+    padding: 14px 6px;
+    text-align: center;
+    border-radius: 14px;
+  }
+
+  .service-card:hover {
+    transform: none;
+  }
+
+  .service-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    font-size: 22px;
+  }
+
+  .service-card h3 {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.2;
+  }
+
+  .service-card p {
+    display: none;
+  }
+
+  .service-card .read-more {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    font-size: 0;
+    border-radius: 14px;
+  }
+}
+
+/* Home section spacing/backgrounds on phones. `.hero ~ .services-section` only
+   matches on Home (Our Services there uses the hero's gradient). */
+@media (max-width: 640px) {
+  .hero ~ .services-section {
+    background: linear-gradient(135deg, #f0f9ff 0%, #cbebff 100%);
+    padding: 10px 0;
+  }
+
+  .info-strip {
+    padding: 30px 0;
+  }
+
+  .machinery-section {
+    background: #f9fbfd;
+    padding: 20px 0;
+  }
+}
+
+/* Inquiries: the card had a fixed 160px action column, so long complaints pushed
+   the card past the screen edge on narrow phones. Stack details above actions. */
+@media (max-width: 640px) {
+  .inquiry {
+    padding: 18px 14px;
+  }
+
+  .inquiry-card {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .inq-left {
+    min-width: 0;
+  }
+
+  .complaint {
+    overflow-wrap: anywhere;
+  }
+
+  .inq-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
   }
 }
